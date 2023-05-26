@@ -15,5 +15,5 @@ class OompaLoompaRepository @Inject constructor(
         pagingSourceFactory = {
             OompaLoompaPagingSource(oompaLoompaApiService)
         }
-    )
+    ).flow
 }
