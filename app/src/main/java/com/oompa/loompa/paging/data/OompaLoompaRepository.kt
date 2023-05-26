@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import com.oompa.loompa.service.OompaLoompaApiService
 import javax.inject.Inject
 
-class OompaRepository @Inject constructor(
+class OompaLoompaRepository @Inject constructor(
     private val oompaLoompaApiService: OompaLoompaApiService
 ) {
     fun getOompaLoompas() = Pager(
@@ -13,7 +13,7 @@ class OompaRepository @Inject constructor(
             pageSize = 20,
         ),
         pagingSourceFactory = {
-            OompaPagePagingSource(oompaLoompaApiService)
+            OompaLoompaPagingSource(oompaLoompaApiService)
         }
     )
 }

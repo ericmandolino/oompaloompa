@@ -2,13 +2,13 @@ package com.oompa.loompa.paging.data
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.oompa.loompa.model.Oompa
+import com.oompa.loompa.model.OompaLoompa
 import com.oompa.loompa.service.OompaLoompaApiService
 
-class OompaPagePagingSource(
+class OompaLoompaPagingSource(
     private val oompaLoompaApiService: OompaLoompaApiService,
-) : PagingSource<Int, Oompa>() {
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Oompa> {
+) : PagingSource<Int, OompaLoompa>() {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, OompaLoompa> {
         return try {
             val page = params.key ?: 1
             val response = oompaLoompaApiService.getPage(page = page)
@@ -23,7 +23,7 @@ class OompaPagePagingSource(
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, Oompa>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, OompaLoompa>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)

@@ -1,7 +1,7 @@
 package com.oompa.loompa.model
 
-data class OompaPage(
+data class OompaLoompaPage(
     val current: Int,
     val total: Int,
-    val results: List<Oompa>
+    val results: List<OompaLoompa>
 )
