@@ -44,7 +44,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.gson.Gson
 import com.oompa.loompa.model.OompaLoompa
 import com.oompa.loompa.ui.theme.LoompaTheme
-import com.oompa.loompa.viewmodel.OompaLoompaViewModel
+import com.oompa.loompa.viewmodel.OompaLoompaViewModel2
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -67,7 +67,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun PagingOompaLoompas() {
-    val viewModel = hiltViewModel<OompaLoompaViewModel>()
+    val viewModel = hiltViewModel<OompaLoompaViewModel2>()
     val oompaLoompas = viewModel.getOompaLoompas().collectAsLazyPagingItems()
 
     LazyColumn {

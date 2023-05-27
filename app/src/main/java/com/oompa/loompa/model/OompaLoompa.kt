@@ -1,13 +1,18 @@
 package com.oompa.loompa.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "oompa_loompas")
 data class OompaLoompa(
-    @SerializedName(value = "first_name")
-    val firstName: String,
-    @SerializedName(value = "last_name")
+    @PrimaryKey val id: Long,
+    @ColumnInfo(name = "first_name") @SerializedName(value = "first_name") val firstName: String,
+    @ColumnInfo(name = "last_name") @SerializedName(value = "last_name")
     val lastName: String,
-    val favorite: OompaLoompaFavorite,
+    @Embedded val favorite: OompaLoompaFavorite,
     val gender: String,
     val image: String,
     val profession: String,
@@ -15,5 +20,4 @@ data class OompaLoompa(
     val age: Int,
     val country: String,
     val height: Int,
-    val id: Long
 )

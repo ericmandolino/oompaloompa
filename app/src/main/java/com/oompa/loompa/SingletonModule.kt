@@ -1,9 +1,15 @@
 package com.oompa.loompa
 
+import android.content.Context
+import androidx.room.Room
+import com.oompa.loompa.database.OompaLoompaDatabase
+import com.oompa.loompa.database.OompaLoompasDao
+import com.oompa.loompa.database.RemoteKeysDao
 import com.oompa.loompa.service.OompaLoompaApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -20,4 +26,21 @@ class SingletonModule {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(OompaLoompaApiService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideOompaLoompaDatabase(@ApplicationContext context: Context): OompaLoompaDatabase =
+        Room
+            .databaseBuilder(context, OompaLoompaDatabase::class.java, "oompa_loompa_database")
+            .build()
+
+    @Singleton
+    @Provides
+    fun provideOompaLoompasDao(oompaLoompaDatabase: OompaLoompaDatabase): OompaLoompasDao =
+        oompaLoompaDatabase.getOompaLoompasDao()
+
+    @Singleton
+    @Provides
+    fun provideRemoteKeysDao(oompaLoompaDatabase: OompaLoompaDatabase): RemoteKeysDao =
+        oompaLoompaDatabase.getRemoteKeysDao()
 }
