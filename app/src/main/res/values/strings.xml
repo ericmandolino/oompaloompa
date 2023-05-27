@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Loompa</string>
+    <string name="age">edad</string>
+    <string name="height">altura</string>
+    <string name="email">e-mail</string>
+    <string name="country">país</string>
+    <string name="show_more">ver más</string>
+    <string name="show_less">ver menos</string>
+    <string name="loading">Cargando</string>
+    <string name="loading_more_results">Cargando más resultados</string>
 </resources>
