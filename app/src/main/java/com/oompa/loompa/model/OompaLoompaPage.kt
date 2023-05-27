@@ -1,7 +1,10 @@
 package com.oompa.loompa.model
 
+import com.google.gson.annotations.SerializedName
+
 data class OompaLoompaPage(
     val current: Int,
     val total: Int,
-    val results: List<OompaLoompa>
+    @SerializedName(value = "results")
+    val oompaLoompas: List<OompaLoompa>
 )

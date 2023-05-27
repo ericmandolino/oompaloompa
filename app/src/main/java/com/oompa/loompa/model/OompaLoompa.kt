@@ -1,8 +1,12 @@
 package com.oompa.loompa.model
 
+import com.google.gson.annotations.SerializedName
+
 data class OompaLoompa(
-    val first_name: String,
-    val last_name: String,
+    @SerializedName(value = "first_name")
+    val firstName: String,
+    @SerializedName(value = "last_name")
+    val lastName: String,
     val favorite: OompaLoompaFavorite,
     val gender: String,
     val image: String,

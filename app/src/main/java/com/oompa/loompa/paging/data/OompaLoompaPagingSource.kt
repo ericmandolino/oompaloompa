@@ -14,7 +14,7 @@ class OompaLoompaPagingSource(
             val response = oompaLoompaApiService.getPage(page = page)
 
             LoadResult.Page(
-                data = response.results,
+                data = response.oompaLoompas,
                 prevKey = if (page == 1) null else page.minus(1),
                 nextKey = if (page == response.total) null else page.plus(1),
             )

@@ -167,7 +167,7 @@ fun OompaLoompaCard(oompaLoompa: OompaLoompa?) {
 @Composable
 fun OompaLoompaCardMain(oompaLoompa: OompaLoompa?) {
     Text(
-        text = "${oompaLoompa?.first_name} ${oompaLoompa?.last_name}",
+        text = "${oompaLoompa?.firstName} ${oompaLoompa?.lastName}",
         fontSize = 16.sp,
     )
     Text(
