@@ -10,8 +10,7 @@ import com.google.gson.annotations.SerializedName
 data class OompaLoompa(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "first_name") @SerializedName(value = "first_name") val firstName: String,
-    @ColumnInfo(name = "last_name") @SerializedName(value = "last_name")
-    val lastName: String,
+    @ColumnInfo(name = "last_name") @SerializedName(value = "last_name") val lastName: String,
     @Embedded val favorite: OompaLoompaFavorite,
     val gender: String,
     val image: String,
