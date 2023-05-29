@@ -8,8 +8,10 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,7 +23,6 @@ import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -32,14 +33,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.gson.Gson
 import com.oompa.loompa.model.OompaLoompa
@@ -70,71 +69,34 @@ fun PagingOompaLoompas() {
     val viewModel = hiltViewModel<OompaLoompaViewModel2>()
     val oompaLoompas = viewModel.getOompaLoompas().collectAsLazyPagingItems()
 
-    LazyColumn {
+    LazyColumn(
+        contentPadding = PaddingValues(vertical = 8.dp, horizontal = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
         items(count = oompaLoompas.itemCount) { index ->
-            OompaLoompaCard(oompaLoompas[index])
-        }
-
-        when (val state = oompaLoompas.loadState.refresh) { //FIRST LOAD
-            is LoadState.Error -> {
-                //TODO Error Item
-                //state.error to get error message
+            val oompaLoompa = oompaLoompas[index]
+            if (oompaLoompa != null) {
+                OompaLoompaCard(oompaLoompa)
+            } else {
+                OompaLoompaPlaceholder()
             }
-
-            is LoadState.Loading -> { // Loading UI
-                item {
-                    Column(
-                        modifier = Modifier.fillParentMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .padding(8.dp),
-                            text = stringResource(R.string.loading)
-                        )
-
-                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-                    }
-                }
-            }
-
-            else -> {}
-        }
-
-        when (val state = oompaLoompas.loadState.append) { // Pagination
-            is LoadState.Error -> {
-                //TODO Pagination Error Item
-                //state.error to get error message
-            }
-
-            is LoadState.Loading -> { // Pagination Loading UI
-                item {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                    ) {
-                        Text(text = stringResource(R.string.loading_more_results))
-
-                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-                    }
-                }
-            }
-
-            else -> {}
         }
     }
 }
 
 @Composable
-fun OompaLoompaCard(oompaLoompa: OompaLoompa?) {
+fun OompaLoompaPlaceholder() {
+    Card( modifier = Modifier.fillMaxWidth().height(48.dp) ) { }
+}
+
+@Composable
+fun OompaLoompaCard(oompaLoompa: OompaLoompa) {
     var expanded by rememberSaveable { mutableStateOf(false) }
     Card(
+        Modifier.defaultMinSize(minHeight = 48.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primary
         ),
-        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
         Row {
             Column(modifier = Modifier
@@ -165,32 +127,32 @@ fun OompaLoompaCard(oompaLoompa: OompaLoompa?) {
 }
 
 @Composable
-fun OompaLoompaCardMain(oompaLoompa: OompaLoompa?) {
+fun OompaLoompaCardMain(oompaLoompa: OompaLoompa) {
     Text(
-        text = "${oompaLoompa?.firstName} ${oompaLoompa?.lastName}",
+        text = "${oompaLoompa.firstName} ${oompaLoompa.lastName}",
         fontSize = 16.sp,
     )
     Text(
-        text = "${oompaLoompa?.profession} (${oompaLoompa?.gender})",
+        text = "${oompaLoompa.profession} (${oompaLoompa.gender})",
         fontSize = 12.sp,
     )
     Text(
-        text = "${oompaLoompa?.id}",
+        text = "${oompaLoompa.id}",
         fontSize = 12.sp,
     )
 }
 
 @Composable
-fun OompaLoompaCardSecondary(oompaLoompa: OompaLoompa?) {
+fun OompaLoompaCardSecondary(oompaLoompa: OompaLoompa) {
     Row {
         Spacer(modifier = Modifier
             .height(4.dp)
             .width(8.dp))
         Column {
-            SecondaryLine(line = "${stringResource(R.string.email)}: ${oompaLoompa?.email}")
-            SecondaryLine(line = "${stringResource(R.string.age)}: ${oompaLoompa?.age}")
-            SecondaryLine(line = "${stringResource(R.string.height)}: ${oompaLoompa?.height}")
-            SecondaryLine(line = "${stringResource(R.string.country)}: ${oompaLoompa?.country}")
+            SecondaryLine(line = "${stringResource(R.string.email)}: ${oompaLoompa.email}")
+            SecondaryLine(line = "${stringResource(R.string.age)}: ${oompaLoompa.age}")
+            SecondaryLine(line = "${stringResource(R.string.height)}: ${oompaLoompa.height}")
+            SecondaryLine(line = "${stringResource(R.string.country)}: ${oompaLoompa.country}")
         }
     }
 }
