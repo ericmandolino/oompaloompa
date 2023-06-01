@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.sp
 import com.oompa.loompa.R
 import com.oompa.loompa.service.API_GENDER_FEMALE
 import com.oompa.loompa.service.API_GENDER_MALE
+import com.oompa.loompa.viewmodel.OompaLoompaFilteringState
 import com.oompa.loompa.viewmodel.OompaLoompaViewModel2
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -62,11 +63,8 @@ fun MainScreen(oompaLoompaViewModel: OompaLoompaViewModel2) {
             content = { paddingValues ->  MainScreenContent(oompaLoompaViewModel, paddingValues) },
             floatingActionButton = {
                 FilterComponent(
-                    oompaLoompaViewModel.filterByGenders,
-                    { oompaLoompaViewModel.onGenderFilterChanged(it) },
+                    oompaLoompaViewModel.getFilteringState(),
                     availableProfessions.value,
-                    oompaLoompaViewModel.filterByProfessions,
-                    { oompaLoompaViewModel.onProfessionFilterChanged(it) },
                 )
             },
         )
@@ -83,11 +81,8 @@ fun MainScreenContent(
 
 @Composable
 fun FilterComponent(
-    selectedGenders: List<String>,
-    onGenderFilterChanged: (List<String>) -> Unit,
+    filteringState: OompaLoompaFilteringState,
     availableProfessions: List<String>,
-    selectedProfessions: List<String>,
-    onProfessionFilterChanged: (List<String>) -> Unit,
 ) {
     var showFiltering by rememberSaveable { mutableStateOf(false) }
 
@@ -97,11 +92,8 @@ fun FilterComponent(
     ) {
         if (showFiltering) {
             FilterContent(
-                selectedGenders,
-                onGenderFilterChanged,
+                filteringState,
                 availableProfessions,
-                selectedProfessions,
-                onProfessionFilterChanged,
             )
         }
         FloatingActionButton(
@@ -116,11 +108,8 @@ fun FilterComponent(
 
 @Composable
 fun FilterContent(
-    selectedGenders: List<String>,
-    onGenderFilterChanged: (List<String>) -> Unit,
+    filteringState: OompaLoompaFilteringState,
     availableProfessions: List<String>,
-    selectedProfessions: List<String>,
-    onProfessionFilterChanged: (List<String>) -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -135,10 +124,17 @@ fun FilterContent(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             FilterSection(filterName = stringResource(R.string.gender)) {
-                FilterByGender(selectedGenders, onGenderFilterChanged)
+                FilterByGender(
+                    filteringState.selectedGenders,
+                    filteringState.onGenderFilterChanged
+                )
             }
             FilterSection(filterName = stringResource(R.string.profession)) {
-                FilterByProfession(availableProfessions, selectedProfessions, onProfessionFilterChanged)
+                FilterByProfession(
+                    availableProfessions,
+                    filteringState.selectedProfessions,
+                    filteringState.onProfessionFilterChanged
+                )
             }
         }
     }
@@ -261,10 +257,12 @@ fun TextRadioButton(isSelected: Boolean, text: String, onClick: () -> Unit) {
 @Composable
 fun FilterContentPreview() {
     FilterContent(
-        selectedGenders = listOf(),
-        onGenderFilterChanged = {},
+        filteringState = OompaLoompaFilteringState(
+            selectedGenders = listOf(),
+            onGenderFilterChanged = {},
+            selectedProfessions = listOf ("Profession1"),
+            onProfessionFilterChanged = {},
+        ),
         availableProfessions = listOf ("Profession1", "Profession2"),
-        selectedProfessions = listOf ("Profession1"),
-        onProfessionFilterChanged = {},
     )
 }

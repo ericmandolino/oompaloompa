@@ -63,4 +63,13 @@ class OompaLoompaViewModel2 @Inject constructor(
         filterByProfessions = professions
         currentPagingSource.invalidate()
     }
+
+    fun getFilteringState() : OompaLoompaFilteringState {
+        return OompaLoompaFilteringState(
+            filterByGenders,
+            { onGenderFilterChanged(it) },
+            filterByProfessions,
+            { onProfessionFilterChanged(it) },
+        )
+    }
 }
