@@ -1,11 +1,19 @@
 <resources>
-    <string name="app_name">Loompa</string>
-    <string name="age">edad</string>
-    <string name="height">altura</string>
+    <string name="app_name">Oompa Loompas</string>
+    <string name="age">age</string>
+    <string name="height">height</string>
     <string name="email">e-mail</string>
-    <string name="country">país</string>
-    <string name="show_more">ver más</string>
-    <string name="show_less">ver menos</string>
-    <string name="loading">Cargando</string>
-    <string name="loading_more_results">Cargando más resultados</string>
+    <string name="country">country</string>
+    <string name="show_more">show more</string>
+    <string name="show_less">show less</string>
+    <string name="loading">Loading</string>
+    <string name="loading_more_results">Loading more results</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="both">Both</string>
+    <string name="profession">Profession</string>
+    <string name="type_a_profession">Type a profession</string>
+    <string name="select">Select</string>
+    <string name="any">any</string>
 </resources>

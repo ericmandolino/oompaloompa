@@ -40,11 +40,11 @@ import com.oompa.loompa.model.OompaLoompa
 import com.oompa.loompa.viewmodel.OompaLoompaViewModel2
 
 @Composable
-fun PagingOompaLoompas(viewModel: OompaLoompaViewModel2) {
-    val oompaLoompas = viewModel.getOompaLoompas().collectAsLazyPagingItems()
+fun PagingOompaLoompas(oompaLoompaViewModel: OompaLoompaViewModel2, paddingValues: PaddingValues) {
+    val oompaLoompas = oompaLoompaViewModel.getOompaLoompas().collectAsLazyPagingItems()
 
     LazyColumn(
-        contentPadding = PaddingValues(vertical = 8.dp, horizontal = 8.dp),
+        modifier = Modifier.padding(paddingValues),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(count = oompaLoompas.itemCount) { index ->
