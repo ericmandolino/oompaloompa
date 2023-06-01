@@ -54,12 +54,12 @@ class OompaLoompaViewModel2 @Inject constructor(
         return oompaLoompasDao.getProfessions()
     }
 
-    fun onGenderFilterChanged(genders: List<String>) {
+    private fun onGenderFilterChanged(genders: List<String>) {
         filterByGenders = genders
         currentPagingSource.invalidate()
     }
 
-    fun onProfessionFilterChanged(professions: List<String>) {
+    private fun onProfessionFilterChanged(professions: List<String>) {
         filterByProfessions = professions
         currentPagingSource.invalidate()
     }
