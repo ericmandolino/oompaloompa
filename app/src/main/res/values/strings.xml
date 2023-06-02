@@ -16,4 +16,5 @@
     <string name="type_a_profession">Type a profession</string>
     <string name="select">Select</string>
     <string name="any">any</string>
+    <string name="go_to_details">Go to details</string>
 </resources>

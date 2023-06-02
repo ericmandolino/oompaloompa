@@ -1,13 +1,11 @@
 package com.oompa.loompa.ui
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -26,7 +24,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -51,32 +48,31 @@ import com.oompa.loompa.ui.theme.LoompaTheme
 import com.oompa.loompa.viewmodel.OompaLoompaFilteringState
 import com.oompa.loompa.viewmodel.OompaLoompaViewModel2
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainScreen(oompaLoompaViewModel: OompaLoompaViewModel2) {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-    ) {
-        val availableProfessions = oompaLoompaViewModel.getProfessions().collectAsState(initial = listOf())
-        Scaffold(
-            modifier = Modifier.padding(8.dp),
-            content = { paddingValues ->  MainScreenContent(oompaLoompaViewModel, paddingValues) },
-            floatingActionButton = {
-                FilterComponent(
-                    oompaLoompaViewModel.getFilteringState(),
-                    availableProfessions.value,
-                )
-            },
-        )
-    }
+fun MainScreen(
+    oompaLoompaViewModel: OompaLoompaViewModel2,
+    onNavigateToOompaLoompaDetails: (oompaLoompaId: Long) -> Unit
+) {
+    val availableProfessions = oompaLoompaViewModel.getProfessions().collectAsState(initial = listOf())
+    Scaffold(
+        modifier = Modifier.padding(8.dp),
+        content = { paddingValues ->  MainScreenContent(oompaLoompaViewModel, onNavigateToOompaLoompaDetails, paddingValues) },
+        floatingActionButton = {
+            FilterComponent(
+                oompaLoompaViewModel.getFilteringState(),
+                availableProfessions.value,
+            )
+        },
+    )
 }
 
 @Composable
 fun MainScreenContent(
     oompaLoompaViewModel: OompaLoompaViewModel2,
+    onNavigateToOompaLoompaDetails: (oompaLoompaId: Long) -> Unit,
     paddingValues: PaddingValues,
 ) {
-    PagingOompaLoompas(oompaLoompaViewModel, paddingValues)
+    PagingOompaLoompas(oompaLoompaViewModel, onNavigateToOompaLoompaDetails, paddingValues)
 }
 
 @Composable

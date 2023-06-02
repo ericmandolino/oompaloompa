@@ -3,6 +3,7 @@ package com.oompa.loompa.ui
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -39,8 +40,12 @@ import com.oompa.loompa.ui.theme.LoompaTheme
 import com.oompa.loompa.viewmodel.OompaLoompaViewModel2
 
 @Composable
-fun PagingOompaLoompas(oompaLoompaViewModel: OompaLoompaViewModel2, paddingValues: PaddingValues) {
-    val oompaLoompas = oompaLoompaViewModel.getOompaLoompas().collectAsLazyPagingItems()
+fun PagingOompaLoompas(
+    oompaLoompaViewModel: OompaLoompaViewModel2,
+    onNavigateToOompaLoompaDetails: (oompaLoompaId: Long) -> Unit,
+    paddingValues: PaddingValues,
+) {
+    val oompaLoompas = oompaLoompaViewModel.oompaLoompas.collectAsLazyPagingItems()
 
     LazyColumn(
         modifier = Modifier.padding(paddingValues),
@@ -49,13 +54,13 @@ fun PagingOompaLoompas(oompaLoompaViewModel: OompaLoompaViewModel2, paddingValue
         items(count = oompaLoompas.itemCount) { index ->
             val oompaLoompa = oompaLoompas[index]
             if (oompaLoompa != null) {
-                OompaLoompaCard(oompaLoompa)
+                OompaLoompaCard(oompaLoompa, onNavigateToOompaLoompaDetails)
             } else {
                 OompaLoompaPlaceholder()
             }
-            if (index == oompaLoompas.itemCount - 1) {
-                Spacer(modifier = Modifier.height(96.dp))
-            }
+        }
+        item {
+            Spacer(modifier = Modifier.height(96.dp))
         }
     }
 }
@@ -68,10 +73,19 @@ fun OompaLoompaPlaceholder() {
 }
 
 @Composable
-fun OompaLoompaCard(oompaLoompa: OompaLoompa) {
+fun OompaLoompaCard(
+    oompaLoompa: OompaLoompa,
+    onNavigateToOompaLoompaDetails: (oompaLoompaId: Long) -> Unit,
+) {
     var expanded by rememberSaveable { mutableStateOf(false) }
     Card(
-        Modifier.defaultMinSize(minHeight = 48.dp),
+        Modifier
+            .defaultMinSize(minHeight = 48.dp)
+            .clickable(
+                onClickLabel = stringResource(R.string.go_to_details),
+            ) {
+                onNavigateToOompaLoompaDetails(oompaLoompa.id)
+            },
     ) {
         Row {
             Column(modifier = Modifier
@@ -160,6 +174,9 @@ fun OompaLoompaCardPreview() {
             "      \"id\": 1\n" +
             "    }", OompaLoompa::class.java)
     LoompaTheme {
-        OompaLoompaCard(oompaLoompa = oompaLoompa)
+        OompaLoompaCard(
+            oompaLoompa = oompaLoompa,
+            onNavigateToOompaLoompaDetails = {}
+        )
     }
 }

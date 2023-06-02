@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.cachedIn
 import com.oompa.loompa.database.OompaLoompaDatabase
@@ -23,8 +22,8 @@ const val PAGE_SIZE = 20
 
 @HiltViewModel
 class OompaLoompaViewModel2 @Inject constructor(
-    private val oompaLoompaApiService: OompaLoompaApiService,
-    private val oompaLoompaDatabase: OompaLoompaDatabase,
+    oompaLoompaApiService: OompaLoompaApiService,
+    oompaLoompaDatabase: OompaLoompaDatabase,
 ): ViewModel() {
     private val oompaLoompasDao = oompaLoompaDatabase.getOompaLoompasDao()
     private lateinit var currentPagingSource: PagingSource<Int, OompaLoompa>
@@ -34,7 +33,7 @@ class OompaLoompaViewModel2 @Inject constructor(
         private set
 
     @OptIn(ExperimentalPagingApi::class)
-    fun getOompaLoompas(): Flow<PagingData<OompaLoompa>> =
+    val oompaLoompas =
         Pager(
             config = PagingConfig(
                 pageSize = PAGE_SIZE,
