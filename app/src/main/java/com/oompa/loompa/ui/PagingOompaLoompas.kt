@@ -53,6 +53,9 @@ fun PagingOompaLoompas(oompaLoompaViewModel: OompaLoompaViewModel2, paddingValue
             } else {
                 OompaLoompaPlaceholder()
             }
+            if (index == oompaLoompas.itemCount - 1) {
+                Spacer(modifier = Modifier.height(96.dp))
+            }
         }
     }
 }
