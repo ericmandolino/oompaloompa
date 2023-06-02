@@ -18,10 +18,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,6 +35,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.gson.Gson
 import com.oompa.loompa.R
 import com.oompa.loompa.model.OompaLoompa
+import com.oompa.loompa.ui.theme.LoompaTheme
 import com.oompa.loompa.viewmodel.OompaLoompaViewModel2
 
 @Composable
@@ -60,7 +59,9 @@ fun PagingOompaLoompas(oompaLoompaViewModel: OompaLoompaViewModel2, paddingValue
 
 @Composable
 fun OompaLoompaPlaceholder() {
-    Card( modifier = Modifier.fillMaxWidth().height(48.dp) ) { }
+    Card( modifier = Modifier
+        .fillMaxWidth()
+        .height(48.dp) ) { }
 }
 
 @Composable
@@ -68,9 +69,6 @@ fun OompaLoompaCard(oompaLoompa: OompaLoompa) {
     var expanded by rememberSaveable { mutableStateOf(false) }
     Card(
         Modifier.defaultMinSize(minHeight = 48.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primary
-        ),
     ) {
         Row {
             Column(modifier = Modifier
@@ -158,5 +156,7 @@ fun OompaLoompaCardPreview() {
             "      \"height\": 99,\n" +
             "      \"id\": 1\n" +
             "    }", OompaLoompa::class.java)
-    OompaLoompaCard(oompaLoompa = oompaLoompa)
+    LoompaTheme {
+        OompaLoompaCard(oompaLoompa = oompaLoompa)
+    }
 }

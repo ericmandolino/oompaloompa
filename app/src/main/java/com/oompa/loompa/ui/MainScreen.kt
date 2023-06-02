@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.sp
 import com.oompa.loompa.R
 import com.oompa.loompa.service.API_GENDER_FEMALE
 import com.oompa.loompa.service.API_GENDER_MALE
+import com.oompa.loompa.ui.theme.LoompaTheme
 import com.oompa.loompa.viewmodel.OompaLoompaFilteringState
 import com.oompa.loompa.viewmodel.OompaLoompaViewModel2
 
@@ -55,7 +56,6 @@ import com.oompa.loompa.viewmodel.OompaLoompaViewModel2
 fun MainScreen(oompaLoompaViewModel: OompaLoompaViewModel2) {
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
     ) {
         val availableProfessions = oompaLoompaViewModel.getProfessions().collectAsState(initial = listOf())
         Scaffold(
@@ -116,7 +116,7 @@ fun FilterContent(
             .wrapContentHeight()
             .width(240.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondary
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
         ),
     ) {
         Column(
@@ -231,7 +231,7 @@ fun FilterByProfession(
                     modifier = Modifier
                         .background(
                             color =
-                            if (selectionOption in selectedProfessions) Color.Green
+                            if (selectionOption in selectedProfessions) MaterialTheme.colorScheme.secondary
                             else Color.Transparent
                         ),
                 )
@@ -256,13 +256,15 @@ fun TextRadioButton(isSelected: Boolean, text: String, onClick: () -> Unit) {
 @Preview(showBackground = true, widthDp = 240)
 @Composable
 fun FilterContentPreview() {
-    FilterContent(
-        filteringState = OompaLoompaFilteringState(
-            selectedGenders = listOf(),
-            onGenderFilterChanged = {},
-            selectedProfessions = listOf ("Profession1"),
-            onProfessionFilterChanged = {},
-        ),
-        availableProfessions = listOf ("Profession1", "Profession2"),
-    )
+    LoompaTheme {
+        FilterContent(
+            filteringState = OompaLoompaFilteringState(
+                selectedGenders = listOf(),
+                onGenderFilterChanged = {},
+                selectedProfessions = listOf ("Profession1"),
+                onProfessionFilterChanged = {},
+            ),
+            availableProfessions = listOf ("Profession1", "Profession2"),
+        )
+    }
 }
