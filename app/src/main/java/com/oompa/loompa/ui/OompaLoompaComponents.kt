@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Card
@@ -188,13 +190,28 @@ fun TextBlock(
             .fillMaxWidth()
             .clickable { }
     ) {
-        Text(
-            text = "$blockName:",
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Bold,
-        )
         Row {
-            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = "$blockName:",
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.weight(1f),
+            )
+            Icon(
+                imageVector = Icons.Default.ArrowForward,
+                modifier = Modifier
+                    .size(16.dp),
+                contentDescription = stringResource(R.string.show),
+            )
+        }
+        Row(
+            modifier = Modifier
+                .padding(
+                    start = 8.dp,
+                    end = 8.dp,
+                    bottom = 4.dp,
+                )
+        ) {
             Text(
                 text = blockValue,
                 maxLines = 5,

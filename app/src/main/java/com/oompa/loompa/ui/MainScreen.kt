@@ -97,7 +97,7 @@ fun FilterComponent(
             containerColor = MaterialTheme.colorScheme.secondary,
             onClick = { showFiltering = !showFiltering }
         ) {
-            Icon(imageVector = Icons.Default.FilterAlt, contentDescription = "filter")
+            Icon(imageVector = Icons.Default.FilterAlt, contentDescription = stringResource(R.string.filter))
         }
     }
 }

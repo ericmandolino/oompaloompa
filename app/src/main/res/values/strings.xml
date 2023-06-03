@@ -25,4 +25,6 @@
     <string name="extra_details">Extra details</string>
     <string name="description">Description</string>
     <string name="quota">Quota</string>
+    <string name="filter">filter</string>
+    <string name="show">show</string>
 </resources>
