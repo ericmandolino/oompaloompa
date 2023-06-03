@@ -13,7 +13,6 @@
     <string name="female">Female</string>
     <string name="both">Both</string>
     <string name="profession">Profession</string>
-    <string name="type_a_profession">Type a profession</string>
     <string name="select">Select</string>
     <string name="any">any</string>
     <string name="go_to_details">Go to details</string>
@@ -27,4 +26,5 @@
     <string name="quota">Quota</string>
     <string name="filter">filter</string>
     <string name="show">show</string>
+    <string name="close">close</string>
 </resources>

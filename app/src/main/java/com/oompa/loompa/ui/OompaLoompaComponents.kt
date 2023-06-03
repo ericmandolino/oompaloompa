@@ -133,7 +133,10 @@ fun SecondaryLine(name: String, value: String) {
 }
 
 @Composable
-fun OompaLoompaFavorite(oompaLoompaFavorite: OompaLoompaFavorite) {
+fun OompaLoompaFavoriteCard(
+    oompaLoompaFavorite: OompaLoompaFavorite,
+    onDisplayLongDetailClicked: ( name: String, value: String) -> Unit,
+) {
     Card {
         Column(
             modifier = Modifier.padding(8.dp),
@@ -145,20 +148,25 @@ fun OompaLoompaFavorite(oompaLoompaFavorite: OompaLoompaFavorite) {
             Spacer(modifier = Modifier.height(8.dp))
             SecondaryLine(name = stringResource(R.string.food), value = oompaLoompaFavorite.food)
             SecondaryLine(name = stringResource(R.string.color), value = oompaLoompaFavorite.color)
-            TextBlock(
+            DetailBlock(
                 blockName = stringResource(R.string.song),
                 blockValue = oompaLoompaFavorite.song,
+                onDisplayLongDetailClicked,
             )
-            TextBlock(
+            DetailBlock(
                 blockName = stringResource(R.string.random_string),
                 blockValue = oompaLoompaFavorite.randomString,
+                onDisplayLongDetailClicked,
             )
         }
     }
 }
 
 @Composable
-fun OompaLoompaExtraDetails(oompaLoompaExtraDetails: OompaLoompaExtraDetails) {
+fun OompaLoompaExtraDetailsCard(
+    oompaLoompaExtraDetails: OompaLoompaExtraDetails,
+    onDisplayLongDetailClicked: (name: String, value: String) -> Unit,
+) {
     Card {
         Column(
             modifier = Modifier.padding(8.dp),
@@ -168,27 +176,32 @@ fun OompaLoompaExtraDetails(oompaLoompaExtraDetails: OompaLoompaExtraDetails) {
                 style = MaterialTheme.typography.titleMedium,
             )
             Spacer(modifier = Modifier.height(8.dp))
-            TextBlock(
+            DetailBlock(
                 blockName = stringResource(R.string.description),
                 blockValue = oompaLoompaExtraDetails.description,
+                onDisplayLongDetailClicked,
             )
-            TextBlock(
+            DetailBlock(
                 blockName = stringResource(R.string.quota),
                 blockValue = oompaLoompaExtraDetails.quota,
+                onDisplayLongDetailClicked,
             )
         }
     }
 }
 
 @Composable
-fun TextBlock(
+fun DetailBlock(
     blockName: String,
     blockValue: String,
+    onDisplayLongDetailClicked: (name: String, value: String) -> Unit,
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { }
+            .clickable {
+                onDisplayLongDetailClicked(blockName, blockValue)
+            }
     ) {
         Row {
             Text(
@@ -255,7 +268,7 @@ fun OompaLoompaCardPreview() {
 
 @Preview(showBackground = true, widthDp = 320)
 @Composable
-fun OompaLoompaFavoritePreview() {
+fun OompaLoompaFavoriteCardPreview() {
     val oompaLoompaFavorite = Gson().fromJson("{\n" +
             "    \"color\": \"red\",\n" +
             "    \"food\": \"Chocolat\",\n" +
@@ -263,13 +276,16 @@ fun OompaLoompaFavoritePreview() {
             "    \"song\": \"Oompa Loompas:\\nOompa Loompa doompadee doo\\nI've got another puzzle for you\\nOompa Loompa doompadah dee\\nIf you are wise you'll listen to me\\nWhat do you get from a glut of TV?\\nA pain in the neck and an IQ of three\\nWhy don't you try simply reading a book?\\nOr could you just not bear to look?\\nYou'll get no\\nYou'll get no\\nYou'll get no\\nYou'll get no\\nYou'll get no commercials\\nOompa Loompa Doompadee Dah\\nIf you're like reading you will go far\\nYou will live in happiness too\\nLike the Oompa\\nOompa Loompa doompadee do\\nOompa Loompas:\\nOompa Loompa doompadee doo\\nI've got another puzzle for you\\nOompa Loompa doompadah dee\\nIf you are wise you'll listen to me\\nWhat do you get from a glut of TV?\\nA pain in the neck and an IQ of three\\nWhy don't you try simply reading a book?\\nOr could you just not bear to look?\\nYou'll get no\\nYou'll get no\\nYou'll get no\\nYou'll get no\\nYou'll get no commercials\\nOompa Loompa Doompadee Dah\\nIf you're like reading you will go far\\nYou will live in happiness too\\nLike the Oompa\\nOompa Loompa doompadee do\\nOompa Loompas:\\nOompa Loompa doompadee doo\\nI've got another puzzle for you\\nOompa Loompa doompadah dee\\nIf you are wise you'll listen to me\\nWhat do you get from a glut of TV?\\nA pain in the neck and an IQ of three\\nWhy don't you try simply reading a book?\\nOr could you just not bear to look?\\nYou'll get no\\nYou'll get no\\nYou'll get no\\nYou'll get no\\nYou'll get no commercials\\nOompa Loompa Doompadee Dah\\nIf you're like reading you will go far\\nYou will live in happiness too\\nLike the Oompa\\nOompa Loompa doompadee do\\nOompa Loompas:\\nOompa Loompa doompadee doo\\nI've got another puzzle for you\\nOompa Loompa doompadah dee\\nIf you are wise you'll listen to me\\nWhat do you get from a glut of TV?\\nA pain in the neck and an IQ of three\\nWhy don't you try simply reading a book?\\nOr could you just not bear to look?\\nYou'll get no\\nYou'll get no\\nYou'll get no\\nYou'll get no\\nYou'll get no commercials\\nOompa Loompa Doompadee Dah\\nIf you're like reading you will go far\\nYou will live in happiness too\\nLike the Oompa\\nOompa Loompa doompadee do\\nOompa Loompas:\\nOompa Loompa doompadee doo\\nI've got another puzzle for you\\nOompa Loompa doompadah dee\\nIf you are wise you'll listen to me\\nWhat do you get from a glut of TV?\\nA pain in the neck and an IQ of three\\nWhy don't you try simply reading a book?\\nOr could you just not bear to look?\\nYou'll get no\\nYou'll get no\\nYou'll get no\\nYou'll get no\\nYou'll get no commercials\\nOompa Loompa Doompadee Dah\\nIf you're like reading you will go far\\nYou will live in happiness too\\nLike the Oompa\\nOompa Loompa doompadee do\\nOompa Loompas:\\nOompa Loompa doompadee doo\\nI've got another puzzle for you\\nOompa Loompa doompadah dee\\nIf you are wise you'll listen to me\\nWhat do you get from a glut of TV?\\nA pain in the neck and an IQ of three\\nWhy don't you try simply reading a book?\\nOr could you just not bear to look?\\nYou'll get no\\nYou'll get no\\nYou'll get no\\nYou'll get no\\nYou'll get no commercials\\nOompa Loompa Doompadee Dah\\nIf you're like reading you will go far\\nYou will live in happiness too\\nLike the Oompa\\nOompa Loompa doompadee do\"\n" +
             "  }", OompaLoompaFavorite::class.java)
     LoompaTheme {
-        OompaLoompaFavorite(oompaLoompaFavorite)
+        OompaLoompaFavoriteCard(
+            oompaLoompaFavorite = oompaLoompaFavorite,
+            onDisplayLongDetailClicked = { _: String,  _: String -> run {} },
+        )
     }
 }
 
 @Preview(showBackground = true, widthDp = 320)
 @Composable
-fun OompaLoompaExtraDetailsPreview() {
+fun OompaLoompaExtraDetailsCardPreview() {
     val oompaLoompaApiResponse = Gson().fromJson("{\n" +
             "  \"last_name\": \"Karadzas\",\n" +
             "  \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum\",\n" +
@@ -295,6 +311,9 @@ fun OompaLoompaExtraDetailsPreview() {
         quota = oompaLoompaApiResponse.quota,
     )
     LoompaTheme {
-        OompaLoompaExtraDetails(oompaLoompaExtraDetails)
+        OompaLoompaExtraDetailsCard(
+            oompaLoompaExtraDetails = oompaLoompaExtraDetails,
+            onDisplayLongDetailClicked = { _: String,  _: String -> run {} },
+        )
     }
 }
