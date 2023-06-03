@@ -12,7 +12,7 @@ import com.oompa.loompa.service.OompaLoompaApiService
 import retrofit2.HttpException
 import java.io.IOException
 
-const val CACHE_TIMEOUT_MILLISECONDS = 3600000
+const val CACHE_TIMEOUT_MILLISECONDS = 60 * 60 * 1000
 
 @OptIn(ExperimentalPagingApi::class)
 class OompaLoompasRemoteMediator(

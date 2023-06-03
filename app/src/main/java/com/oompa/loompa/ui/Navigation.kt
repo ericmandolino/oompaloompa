@@ -33,7 +33,8 @@ fun Navigation(
             arguments = listOf(navArgument("oompaLoompaId") { type = NavType.LongType }),
         ) { backStackEntry ->
             OompaLoompaDetailsScreen(
-                backStackEntry.arguments?.getLong("oompaLoompaId"),
+                oompaLoompaViewModel = oompaLoompaViewModel,
+                oompaLoompaId = backStackEntry.arguments?.getLong("oompaLoompaId"),
             )
         }
     }

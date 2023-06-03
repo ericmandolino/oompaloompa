@@ -12,6 +12,8 @@ import androidx.paging.PagingSource
 import androidx.paging.cachedIn
 import com.oompa.loompa.database.OompaLoompaDatabase
 import com.oompa.loompa.model.OompaLoompa
+import com.oompa.loompa.model.OompaLoompaExtraDetails
+import com.oompa.loompa.paging.data.OompaLoompaRepository
 import com.oompa.loompa.paging.data.OompaLoompasRemoteMediator
 import com.oompa.loompa.service.OompaLoompaApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,6 +26,7 @@ const val PAGE_SIZE = 20
 class OompaLoompaViewModel2 @Inject constructor(
     oompaLoompaApiService: OompaLoompaApiService,
     oompaLoompaDatabase: OompaLoompaDatabase,
+    private val oompaLoompaRepository: OompaLoompaRepository,
 ): ViewModel() {
     private val oompaLoompasDao = oompaLoompaDatabase.getOompaLoompasDao()
     private lateinit var currentPagingSource: PagingSource<Int, OompaLoompa>
@@ -51,6 +54,13 @@ class OompaLoompaViewModel2 @Inject constructor(
 
     fun getProfessions(): Flow<List<String>> {
         return oompaLoompasDao.getProfessions()
+    }
+
+    fun getOompaLoompaWithExtraDetails(oompaLoompaId: Long): Flow<OompaLoompaExtraDetails> {
+        return oompaLoompaRepository.getOompaLoompaExtraDetails(
+            coroutineScope = viewModelScope,
+            oompaLoompaId = oompaLoompaId,
+        )
     }
 
     private fun onGenderFilterChanged(genders: List<String>) {
