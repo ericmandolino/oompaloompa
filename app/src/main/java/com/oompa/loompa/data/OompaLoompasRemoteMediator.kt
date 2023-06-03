@@ -1,14 +1,14 @@
-package com.oompa.loompa.paging.data
+package com.oompa.loompa.data
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.oompa.loompa.database.OompaLoompaDatabase
-import com.oompa.loompa.model.OompaLoompa
-import com.oompa.loompa.model.RemoteKeys
-import com.oompa.loompa.service.OompaLoompaApiService
+import com.oompa.loompa.data.database.OompaLoompaDatabase
+import com.oompa.loompa.data.model.OompaLoompa
+import com.oompa.loompa.data.model.RemoteKeys
+import com.oompa.loompa.data.service.OompaLoompaApiService
 import retrofit2.HttpException
 import java.io.IOException
 

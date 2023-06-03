@@ -1,10 +1,10 @@
-package com.oompa.loompa.paging.data
+package com.oompa.loompa.data
 
-import com.oompa.loompa.database.OompaLoompaDatabase
-import com.oompa.loompa.model.OompaLoompa
-import com.oompa.loompa.model.OompaLoompaApiResponse
-import com.oompa.loompa.model.OompaLoompaExtraDetails
-import com.oompa.loompa.service.OompaLoompaApiService
+import com.oompa.loompa.data.database.OompaLoompaDatabase
+import com.oompa.loompa.data.model.OompaLoompa
+import com.oompa.loompa.data.model.OompaLoompaApiResponse
+import com.oompa.loompa.data.model.OompaLoompaExtraDetails
+import com.oompa.loompa.data.service.OompaLoompaApiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch

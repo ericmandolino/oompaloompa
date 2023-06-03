@@ -1,7 +1,7 @@
-package com.oompa.loompa.service
+package com.oompa.loompa.data.service
 
-import com.oompa.loompa.model.OompaLoompaApiResponse
-import com.oompa.loompa.model.OompaLoompaPage
+import com.oompa.loompa.data.model.OompaLoompaApiResponse
+import com.oompa.loompa.data.model.OompaLoompaPage
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

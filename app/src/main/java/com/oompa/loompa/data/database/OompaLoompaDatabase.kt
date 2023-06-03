@@ -1,10 +1,10 @@
-package com.oompa.loompa.database
+package com.oompa.loompa.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.oompa.loompa.model.OompaLoompa
-import com.oompa.loompa.model.OompaLoompaExtraDetails
-import com.oompa.loompa.model.RemoteKeys
+import com.oompa.loompa.data.model.OompaLoompa
+import com.oompa.loompa.data.model.OompaLoompaExtraDetails
+import com.oompa.loompa.data.model.RemoteKeys
 
 @Database(
     entities = [OompaLoompa::class, OompaLoompaExtraDetails::class, RemoteKeys::class],

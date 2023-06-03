@@ -42,15 +42,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.oompa.loompa.R
-import com.oompa.loompa.service.API_GENDER_FEMALE
-import com.oompa.loompa.service.API_GENDER_MALE
+import com.oompa.loompa.data.service.API_GENDER_FEMALE
+import com.oompa.loompa.data.service.API_GENDER_MALE
 import com.oompa.loompa.ui.theme.LoompaTheme
 import com.oompa.loompa.viewmodel.OompaLoompaFilteringState
-import com.oompa.loompa.viewmodel.OompaLoompaViewModel2
+import com.oompa.loompa.viewmodel.OompaLoompaViewModel
 
 @Composable
 fun MainScreen(
-    oompaLoompaViewModel: OompaLoompaViewModel2,
+    oompaLoompaViewModel: OompaLoompaViewModel,
     onNavigateToOompaLoompaDetails: (oompaLoompaId: Long) -> Unit
 ) {
     val availableProfessions = oompaLoompaViewModel.getProfessions().collectAsState(initial = listOf())
@@ -68,7 +68,7 @@ fun MainScreen(
 
 @Composable
 fun MainScreenContent(
-    oompaLoompaViewModel: OompaLoompaViewModel2,
+    oompaLoompaViewModel: OompaLoompaViewModel,
     onNavigateToOompaLoompaDetails: (oompaLoompaId: Long) -> Unit,
     paddingValues: PaddingValues,
 ) {

@@ -1,4 +1,4 @@
-package com.oompa.loompa.model
+package com.oompa.loompa.data.model
 
 import com.google.gson.annotations.SerializedName
 

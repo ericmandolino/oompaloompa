@@ -35,13 +35,13 @@ import androidx.compose.ui.unit.sp
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.gson.Gson
 import com.oompa.loompa.R
-import com.oompa.loompa.model.OompaLoompa
+import com.oompa.loompa.data.model.OompaLoompa
 import com.oompa.loompa.ui.theme.LoompaTheme
-import com.oompa.loompa.viewmodel.OompaLoompaViewModel2
+import com.oompa.loompa.viewmodel.OompaLoompaViewModel
 
 @Composable
 fun PagingOompaLoompas(
-    oompaLoompaViewModel: OompaLoompaViewModel2,
+    oompaLoompaViewModel: OompaLoompaViewModel,
     onNavigateToOompaLoompaDetails: (oompaLoompaId: Long) -> Unit,
     paddingValues: PaddingValues,
 ) {

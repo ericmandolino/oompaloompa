@@ -2,10 +2,10 @@ package com.oompa.loompa
 
 import android.content.Context
 import androidx.room.Room
-import com.oompa.loompa.database.OompaLoompaDatabase
-import com.oompa.loompa.database.OompaLoompasDao
-import com.oompa.loompa.database.RemoteKeysDao
-import com.oompa.loompa.service.OompaLoompaApiService
+import com.oompa.loompa.data.database.OompaLoompaDatabase
+import com.oompa.loompa.data.database.OompaLoompasDao
+import com.oompa.loompa.data.database.RemoteKeysDao
+import com.oompa.loompa.data.service.OompaLoompaApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

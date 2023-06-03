@@ -8,13 +8,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.oompa.loompa.viewmodel.OompaLoompaViewModel2
+import com.oompa.loompa.viewmodel.OompaLoompaViewModel
 
 @Composable
 fun Navigation(
     navController: NavHostController = rememberNavController(),
     startDestination: String = "main",
-    oompaLoompaViewModel: OompaLoompaViewModel2 = hiltViewModel(),
+    oompaLoompaViewModel: OompaLoompaViewModel = hiltViewModel(),
 ) {
     NavHost(
         navController = navController,

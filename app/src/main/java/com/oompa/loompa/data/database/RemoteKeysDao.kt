@@ -1,10 +1,10 @@
-package com.oompa.loompa.database
+package com.oompa.loompa.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.oompa.loompa.model.RemoteKeys
+import com.oompa.loompa.data.model.RemoteKeys
 
 @Dao
 interface RemoteKeysDao {

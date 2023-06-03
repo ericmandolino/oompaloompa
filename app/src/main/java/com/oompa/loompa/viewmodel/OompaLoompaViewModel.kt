@@ -10,12 +10,12 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import androidx.paging.cachedIn
-import com.oompa.loompa.database.OompaLoompaDatabase
-import com.oompa.loompa.model.OompaLoompa
-import com.oompa.loompa.model.OompaLoompaExtraDetails
-import com.oompa.loompa.paging.data.OompaLoompaRepository
-import com.oompa.loompa.paging.data.OompaLoompasRemoteMediator
-import com.oompa.loompa.service.OompaLoompaApiService
+import com.oompa.loompa.data.database.OompaLoompaDatabase
+import com.oompa.loompa.data.model.OompaLoompa
+import com.oompa.loompa.data.model.OompaLoompaExtraDetails
+import com.oompa.loompa.data.OompaLoompaRepository
+import com.oompa.loompa.data.OompaLoompasRemoteMediator
+import com.oompa.loompa.data.service.OompaLoompaApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -23,7 +23,7 @@ import javax.inject.Inject
 const val PAGE_SIZE = 20
 
 @HiltViewModel
-class OompaLoompaViewModel2 @Inject constructor(
+class OompaLoompaViewModel @Inject constructor(
     oompaLoompaApiService: OompaLoompaApiService,
     oompaLoompaDatabase: OompaLoompaDatabase,
     private val oompaLoompaRepository: OompaLoompaRepository,

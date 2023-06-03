@@ -1,4 +1,4 @@
-package com.oompa.loompa.database
+package com.oompa.loompa.data.database
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
@@ -8,8 +8,8 @@ import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
-import com.oompa.loompa.model.OompaLoompa
-import com.oompa.loompa.model.OompaLoompaExtraDetails
+import com.oompa.loompa.data.model.OompaLoompa
+import com.oompa.loompa.data.model.OompaLoompaExtraDetails
 import kotlinx.coroutines.flow.Flow
 
 @Dao

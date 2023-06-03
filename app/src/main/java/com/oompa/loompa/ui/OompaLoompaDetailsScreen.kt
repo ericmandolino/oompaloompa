@@ -11,13 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.oompa.loompa.model.OompaLoompa
-import com.oompa.loompa.model.OompaLoompaExtraDetails
-import com.oompa.loompa.viewmodel.OompaLoompaViewModel2
+import com.oompa.loompa.data.model.OompaLoompa
+import com.oompa.loompa.data.model.OompaLoompaExtraDetails
+import com.oompa.loompa.viewmodel.OompaLoompaViewModel
 
 @Composable
 fun OompaLoompaDetailsScreen(
-    oompaLoompaViewModel: OompaLoompaViewModel2,
+    oompaLoompaViewModel: OompaLoompaViewModel,
     oompaLoompaId: Long?,
 ) {
     val oompaLoompaDetails = if (oompaLoompaId != null) oompaLoompaViewModel.getOompaLoompaWithExtraDetails(oompaLoompaId).collectAsState(null).value else null
