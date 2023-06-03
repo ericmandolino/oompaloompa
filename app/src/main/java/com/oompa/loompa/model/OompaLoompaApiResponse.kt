@@ -2,7 +2,7 @@ package com.oompa.loompa.model
 
 import com.google.gson.annotations.SerializedName
 
-data class OompaLoompaExtraDetails(
+data class OompaLoompaApiResponse(
     val description: String,
     val quota: String,
     @SerializedName(value = "first_name") val firstName: String,

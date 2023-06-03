@@ -1,6 +1,6 @@
 package com.oompa.loompa.service
 
-import com.oompa.loompa.model.OompaLoompaExtraDetails
+import com.oompa.loompa.model.OompaLoompaApiResponse
 import com.oompa.loompa.model.OompaLoompaPage
 import retrofit2.Call
 import retrofit2.http.GET
@@ -17,5 +17,5 @@ interface OompaLoompaApiService {
     ): OompaLoompaPage
 
     @GET("napptilus/oompa-loompas/{id}")
-    fun getOompaLoompaExtraDetails(@Path("id") oompaLoompaId: Long): Call<OompaLoompaExtraDetails>
+    fun getOompaLoompa(@Path("id") oompaLoompaId: Long): Call<OompaLoompaApiResponse>
 }
