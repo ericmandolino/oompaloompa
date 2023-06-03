@@ -20,7 +20,9 @@ fun Navigation(
         navController = navController,
         startDestination = startDestination,
     ) {
-        composable("main") {
+        composable(
+            route = "main"
+        ) {
             MainScreen(
                 oompaLoompaViewModel = oompaLoompaViewModel,
                 onNavigateToOompaLoompaDetails = {
@@ -29,12 +31,12 @@ fun Navigation(
             )
         }
         composable(
-            "oompaLoompaDetails/{oompaLoompaId}",
+            route = "oompaLoompaDetails/{oompaLoompaId}",
             arguments = listOf(navArgument("oompaLoompaId") { type = NavType.LongType }),
-        ) { backStackEntry ->
+        ) { navBackStackEntry ->
             OompaLoompaDetailsScreen(
                 oompaLoompaViewModel = oompaLoompaViewModel,
-                oompaLoompaId = backStackEntry.arguments?.getLong("oompaLoompaId"),
+                oompaLoompaId = navBackStackEntry.arguments?.getLong("oompaLoompaId"),
             )
         }
     }
