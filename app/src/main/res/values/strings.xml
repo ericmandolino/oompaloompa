@@ -17,4 +17,12 @@
     <string name="select">Select</string>
     <string name="any">any</string>
     <string name="go_to_details">Go to details</string>
+    <string name="food">Food</string>
+    <string name="color">Color</string>
+    <string name="favorite">Favorite</string>
+    <string name="song">Song</string>
+    <string name="random_string">Random String</string>
+    <string name="extra_details">Extra details</string>
+    <string name="description">Description</string>
+    <string name="quota">Quota</string>
 </resources>

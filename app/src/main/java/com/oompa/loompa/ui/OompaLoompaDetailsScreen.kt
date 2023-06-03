@@ -46,12 +46,16 @@ fun OompaLoompaDetails(
             startExpanded = true,
             clickable = false,
         )
-        Text(text = oompaLoompaExtraDetails.description)
-        Text(text = oompaLoompaExtraDetails.quota)
+        OompaLoompaFavorite(
+            oompaLoompaFavorite = oompaLoompa.favorite,
+        )
+        OompaLoompaExtraDetails(
+            oompaLoompaExtraDetails = oompaLoompaExtraDetails,
+        )
     }
 }
 
 @Composable
 fun OompaLoompaNoDetails() {
-    Text(text = "No details available :(")
+    Text(text = "No details available :(") // TODO: loading (?) refresh (?)
 }
