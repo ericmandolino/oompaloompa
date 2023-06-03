@@ -27,10 +27,14 @@ interface OompaLoompasDao {
     fun getProfessions(): Flow<List<String>>
 
     @Query("Select * From oompa_loompas_extra_details Where id=:oompaLoompaId")
-    fun observeOompaLoompaWithExtraDetails(oompaLoompaId: Long): Flow<OompaLoompaExtraDetails> // TODO: return a multimap Map<OompaLoompa, OompaLoompaDetails>
-
-    @Query("Select * From oompa_loompas_extra_details Where id=:oompaLoompaId")
     suspend fun getOompaLoompaExtraDetails(oompaLoompaId: Long): OompaLoompaExtraDetails?
+
+    @Query(
+        "Select * From oompa_loompas " +
+        "Join oompa_loompas_extra_details On oompa_loompas.id = oompa_loompas_extra_details.id " +
+        "Where oompa_loompas.id=:oompaLoompaId"
+    )
+    fun observeOompaLoompaWithExtraDetails(oompaLoompaId: Long): Flow<Map<OompaLoompa, OompaLoompaExtraDetails>>
 
     @RawQuery(observedEntities = [OompaLoompa::class])
     fun getOompaLoompas(query: SupportSQLiteQuery): PagingSource<Int, OompaLoompa>

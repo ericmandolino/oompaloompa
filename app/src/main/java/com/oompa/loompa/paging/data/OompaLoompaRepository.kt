@@ -1,6 +1,7 @@
 package com.oompa.loompa.paging.data
 
 import com.oompa.loompa.database.OompaLoompaDatabase
+import com.oompa.loompa.model.OompaLoompa
 import com.oompa.loompa.model.OompaLoompaApiResponse
 import com.oompa.loompa.model.OompaLoompaExtraDetails
 import com.oompa.loompa.service.OompaLoompaApiService
@@ -23,7 +24,7 @@ class OompaLoompaRepository @Inject constructor(
     fun getOompaLoompaExtraDetails(
         coroutineScope: CoroutineScope,
         oompaLoompaId: Long,
-    ): Flow<OompaLoompaExtraDetails> {
+    ): Flow<Map<OompaLoompa, OompaLoompaExtraDetails>> {
         checkCache(coroutineScope, oompaLoompaId)
         return oompaLoompasDao.observeOompaLoompaWithExtraDetails(oompaLoompaId)
     }

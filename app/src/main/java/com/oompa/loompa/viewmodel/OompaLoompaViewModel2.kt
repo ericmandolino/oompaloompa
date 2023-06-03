@@ -56,7 +56,7 @@ class OompaLoompaViewModel2 @Inject constructor(
         return oompaLoompasDao.getProfessions()
     }
 
-    fun getOompaLoompaWithExtraDetails(oompaLoompaId: Long): Flow<OompaLoompaExtraDetails> {
+    fun getOompaLoompaWithExtraDetails(oompaLoompaId: Long): Flow<Map<OompaLoompa, OompaLoompaExtraDetails>> {
         return oompaLoompaRepository.getOompaLoompaExtraDetails(
             coroutineScope = viewModelScope,
             oompaLoompaId = oompaLoompaId,
