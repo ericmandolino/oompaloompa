@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,7 +30,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.google.gson.Gson
 import com.oompa.loompa.R
 import com.oompa.loompa.data.model.OompaLoompa
@@ -69,6 +69,7 @@ fun OompaLoompaCard(
             ) {
                 OompaLoompaCardMain(oompaLoompa = oompaLoompa)
                 if (expanded) {
+                    Spacer(modifier = Modifier.height(4.dp))
                     OompaLoompaCardSecondary(oompaLoompa = oompaLoompa)
                 }
             }
@@ -89,24 +90,22 @@ fun OompaLoompaCard(
 fun OompaLoompaCardMain(oompaLoompa: OompaLoompa) {
     Text(
         text = "${oompaLoompa.firstName} ${oompaLoompa.lastName}",
-        fontSize = 16.sp,
+        style = MaterialTheme.typography.titleLarge,
     )
     Text(
         text = "${oompaLoompa.profession} (${oompaLoompa.gender})",
-        fontSize = 12.sp,
+        style = MaterialTheme.typography.titleMedium,
     )
     Text(
         text = "ID ${oompaLoompa.id}",
-        fontSize = 12.sp,
+        style = MaterialTheme.typography.titleSmall,
     )
 }
 
 @Composable
 fun OompaLoompaCardSecondary(oompaLoompa: OompaLoompa) {
     Row {
-        Spacer(modifier = Modifier
-            .height(4.dp)
-            .width(8.dp))
+        Spacer(modifier = Modifier.width(8.dp))
         Column {
             SecondaryLine(name = stringResource(R.string.email), value = oompaLoompa.email)
             SecondaryLine(name = stringResource(R.string.age), value = oompaLoompa.age.toString())
@@ -121,12 +120,12 @@ fun SecondaryLine(name: String, value: String) {
     Row {
         Text(
             text = "$name: ",
-            fontSize = 8.sp,
+            style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Bold,
         )
         Text(
             text = value,
-            fontSize = 8.sp,
+            style = MaterialTheme.typography.bodyMedium,
         )
     }
 }
@@ -139,7 +138,7 @@ fun OompaLoompaFavorite(oompaLoompaFavorite: OompaLoompaFavorite) {
         ) {
             Text(
                 text = stringResource(R.string.favorite),
-                fontSize = 12.sp,
+                style = MaterialTheme.typography.titleMedium,
             )
             Spacer(modifier = Modifier.height(8.dp))
             SecondaryLine(name = stringResource(R.string.food), value = oompaLoompaFavorite.food)
@@ -164,7 +163,7 @@ fun OompaLoompaExtraDetails(oompaLoompaExtraDetails: OompaLoompaExtraDetails) {
         ) {
             Text(
                 text = stringResource(R.string.extra_details),
-                fontSize = 12.sp,
+                style = MaterialTheme.typography.titleMedium,
             )
             Spacer(modifier = Modifier.height(8.dp))
             TextBlock(
@@ -191,7 +190,7 @@ fun TextBlock(
     ) {
         Text(
             text = "$blockName:",
-            fontSize = 8.sp,
+            style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Bold,
         )
         Row {
@@ -199,8 +198,7 @@ fun TextBlock(
             Text(
                 text = blockValue,
                 maxLines = 5,
-                fontSize = 8.sp,
-                lineHeight = 12.sp,
+                style = MaterialTheme.typography.bodyMedium,
                 overflow = TextOverflow.Ellipsis,
             )
         }
