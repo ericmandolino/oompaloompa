@@ -41,8 +41,11 @@ fun OompaLoompaDetails(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Text(text = oompaLoompa.firstName)
-        Text(text = oompaLoompa.lastName)
+        OompaLoompaCard(
+            oompaLoompa = oompaLoompa,
+            startExpanded = true,
+            clickable = false,
+        )
         Text(text = oompaLoompaExtraDetails.description)
         Text(text = oompaLoompaExtraDetails.quota)
     }
