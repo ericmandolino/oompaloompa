@@ -13,7 +13,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-const val EXTRA_DETAILS_CACHE_TIMEOUT_MILLISECONDS = 10 * 60 * 1000 // TODO: extract to consts and inject to constructor?
+private const val CACHE_TIMEOUT_MILLISECONDS = 10 * 60 * 1000
 
 class OompaLoompaRepository @Inject constructor(
     private val oompaLoompaApiService: OompaLoompaApiService,
@@ -95,6 +95,6 @@ class OompaLoompaRepository @Inject constructor(
         val cachedOompaLoompaExtraDetails = oompaLoompasDao.getOompaLoompaExtraDetails(oompaLoompaId)
 
         return cachedOompaLoompaExtraDetails != null &&
-                System.currentTimeMillis() - cachedOompaLoompaExtraDetails.createdAt < EXTRA_DETAILS_CACHE_TIMEOUT_MILLISECONDS
+                System.currentTimeMillis() - cachedOompaLoompaExtraDetails.createdAt < CACHE_TIMEOUT_MILLISECONDS
     }
 }

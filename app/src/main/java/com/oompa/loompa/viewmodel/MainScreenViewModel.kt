@@ -18,7 +18,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-const val PAGE_SIZE = 20
+private const val PAGE_SIZE = 25
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
