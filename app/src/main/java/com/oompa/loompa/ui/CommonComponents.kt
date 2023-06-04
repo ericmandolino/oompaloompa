@@ -179,6 +179,23 @@ fun RetryCard(
 }
 
 @Composable
+fun LoadingCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(96.dp)) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            CircularProgressIndicator()
+        }
+    }
+}
+
+@Composable
 fun FullScreenLoading() {
     Row(
         modifier = Modifier
@@ -245,5 +262,13 @@ fun OompaLoompaRefreshExtraDetailsCardPreview() {
 fun FullScreenLoadingPreview() {
     LoompaTheme {
         FullScreenLoading()
+    }
+}
+
+@Preview(showBackground = true, widthDp = 320)
+@Composable
+fun LoadingCardPreview() {
+    LoompaTheme {
+        LoadingCard()
     }
 }

@@ -55,13 +55,19 @@ fun OompaLoompaPagingList(
     onNavigateToOompaLoompaDetails: (oompaLoompaId: Long) -> Unit,
     paddingValues: PaddingValues,
 ) {
-
-
     LazyColumn(
         modifier = Modifier.padding(paddingValues),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(count = oompaLoompas.itemCount) { index ->
+        item {
+            OompaLoompaPagingPrependItem(
+                oompaLoompas
+            )
+        }
+        items(
+            count = oompaLoompas.itemCount,
+            contentType = { index -> if (oompaLoompas[index] != null) 1 else 2 },
+        ) { index ->
             val oompaLoompa = oompaLoompas[index]
             if (oompaLoompa != null) {
                 OompaLoompaCard(
@@ -75,7 +81,56 @@ fun OompaLoompaPagingList(
             }
         }
         item {
+            OompaLoompaPagingAppendItem(
+                oompaLoompas
+            )
+        }
+        item {
             Spacer(modifier = Modifier.height(96.dp))
+        }
+    }
+}
+
+@Composable
+fun OompaLoompaPagingPrependItem(
+    oompaLoompas: LazyPagingItems<OompaLoompa>,
+) {
+    val pageLoadState = oompaLoompas.loadState
+
+    when (pageLoadState.prepend) {
+        is LoadState.Loading -> {
+            LoadingCard()
+        }
+        is LoadState.Error -> {
+            RetryCard (
+                onRetry = {
+                    oompaLoompas.retry()
+                }
+            )
+        }
+        else -> {
+        }
+    }
+}
+
+@Composable
+fun OompaLoompaPagingAppendItem(
+    oompaLoompas: LazyPagingItems<OompaLoompa>,
+) {
+    val pageLoadState = oompaLoompas.loadState
+
+    when (pageLoadState.append) {
+        is LoadState.Loading -> {
+            LoadingCard()
+        }
+        is LoadState.Error -> {
+            RetryCard (
+                onRetry = {
+                    oompaLoompas.retry()
+                }
+            )
+        }
+        else -> {
         }
     }
 }
