@@ -12,8 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.oompa.loompa.R
+import com.oompa.loompa.data.model.OompaLoompa
 import com.oompa.loompa.viewmodel.MainScreenViewModel
 
 @Composable
@@ -23,6 +26,36 @@ fun PagingOompaLoompas(
     paddingValues: PaddingValues,
 ) {
     val oompaLoompas = oompaLoompaViewModel.oompaLoompas.collectAsLazyPagingItems()
+    val pageLoadState = oompaLoompas.loadState
+
+    when (pageLoadState.refresh) {
+        is LoadState.Error -> {
+            RetryCard (
+                onRetry = {
+                    oompaLoompas.refresh()
+                }
+            )
+        }
+        is LoadState.Loading -> {
+            FullScreenLoading()
+        }
+        else -> {
+            OompaLoompaPagingList(
+                oompaLoompas,
+                onNavigateToOompaLoompaDetails,
+                paddingValues
+            )
+        }
+    }
+}
+
+@Composable
+fun OompaLoompaPagingList(
+    oompaLoompas: LazyPagingItems<OompaLoompa>,
+    onNavigateToOompaLoompaDetails: (oompaLoompaId: Long) -> Unit,
+    paddingValues: PaddingValues,
+) {
+
 
     LazyColumn(
         modifier = Modifier.padding(paddingValues),

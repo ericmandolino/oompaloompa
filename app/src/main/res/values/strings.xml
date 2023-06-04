@@ -6,7 +6,7 @@
     <string name="country">country</string>
     <string name="show_more">show more</string>
     <string name="show_less">show less</string>
-    <string name="loading">Loading</string>
+    <string name="loading">Loading…</string>
     <string name="loading_more_results">Loading more results</string>
     <string name="gender">Gender</string>
     <string name="male">Male</string>

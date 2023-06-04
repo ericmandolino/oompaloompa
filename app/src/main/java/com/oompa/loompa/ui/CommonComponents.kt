@@ -4,9 +4,12 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -15,7 +18,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -148,6 +153,52 @@ fun SecondaryLine(name: String, value: String) {
     }
 }
 
+@Composable
+fun RetryCard(
+    onRetry: () -> Unit,
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(96.dp)) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            Button(
+                onClick = onRetry,
+            ) {
+                Text(
+                    text = stringResource(R.string.retry)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun FullScreenLoading() {
+    Row(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                text = stringResource(R.string.loading),
+                style = MaterialTheme.typography.displaySmall,
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            CircularProgressIndicator()
+        }
+    }
+}
+
 @Preview(showBackground = true, widthDp = 320)
 @Composable
 fun OompaLoompaCardPreview() {
@@ -176,5 +227,23 @@ fun OompaLoompaCardPreview() {
             onClick = {},
             clickLabel = "click label",
         )
+    }
+}
+
+@Preview(showBackground = true, widthDp = 320)
+@Composable
+fun OompaLoompaRefreshExtraDetailsCardPreview() {
+    LoompaTheme {
+        RetryCard(
+            onRetry = {},
+        )
+    }
+}
+
+@Preview(showBackground = true, widthDp = 320, heightDp = 320)
+@Composable
+fun FullScreenLoadingPreview() {
+    LoompaTheme {
+        FullScreenLoading()
     }
 }

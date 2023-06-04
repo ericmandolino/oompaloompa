@@ -17,7 +17,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -133,36 +132,11 @@ fun ExtraDetails(
             longDetailState,
         )
     } else if (refreshExtraDetailsState.showRefreshExtraDetails) {
-        OompaLoompaRefreshExtraDetailsCard(
-            onRefreshExtraDetails = refreshExtraDetailsState.onRefreshExtraDetails
+        RetryCard(
+            onRetry = refreshExtraDetailsState.onRefreshExtraDetails
         )
     } else {
         OompaLoompaNoDetailsCard()
-    }
-}
-
-@Composable
-fun OompaLoompaRefreshExtraDetailsCard(
-    onRefreshExtraDetails: () -> Unit,
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(96.dp)) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-        ) {
-             Button(
-                 onClick = onRefreshExtraDetails,
-             ) {
-                 Text(
-                     text = stringResource(R.string.retry)
-                 )
-             }
-        }
     }
 }
 
@@ -431,15 +405,5 @@ fun LongDetailPreview() {
 fun OompaLoompaNoDetailsCardPreview() {
     LoompaTheme {
         OompaLoompaNoDetailsCard()
-    }
-}
-
-@Preview(showBackground = true, widthDp = 320)
-@Composable
-fun OompaLoompaRefreshExtraDetailsCardPreview() {
-    LoompaTheme {
-        OompaLoompaRefreshExtraDetailsCard(
-            onRefreshExtraDetails = {},
-        )
     }
 }
