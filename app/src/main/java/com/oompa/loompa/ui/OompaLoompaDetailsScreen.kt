@@ -22,10 +22,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,6 +32,7 @@ import com.oompa.loompa.R
 import com.oompa.loompa.data.model.OompaLoompa
 import com.oompa.loompa.data.model.OompaLoompaExtraDetails
 import com.oompa.loompa.ui.theme.LoompaTheme
+import com.oompa.loompa.viewmodel.OompaLoompaLongDetailState
 import com.oompa.loompa.viewmodel.OompaLoompaViewModel
 
 @Composable
@@ -46,7 +43,11 @@ fun OompaLoompaDetailsScreen(
     val oompaLoompaDetails = if (oompaLoompaId != null) oompaLoompaViewModel.getOompaLoompaWithExtraDetails(oompaLoompaId).collectAsState(null).value else null
     if (oompaLoompaDetails?.size == 1) {
         val entry = oompaLoompaDetails.iterator().next()
-        OompaLoompaDetails(entry.key, entry.value)
+        OompaLoompaDetails(
+            oompaLoompa = entry.key,
+            oompaLoompaExtraDetails = entry.value,
+            longDetailState = oompaLoompaViewModel.getLongDetailState(),
+        )
     } else {
         OompaLoompaNoDetails()
     }
@@ -56,22 +57,8 @@ fun OompaLoompaDetailsScreen(
 fun OompaLoompaDetails(
     oompaLoompa: OompaLoompa,
     oompaLoompaExtraDetails: OompaLoompaExtraDetails,
+    longDetailState: OompaLoompaLongDetailState,
 ) {
-    var displayLongDetails by rememberSaveable { mutableStateOf(false) }
-    var longDetailName by rememberSaveable { mutableStateOf("") }
-    var longDetailValue by rememberSaveable { mutableStateOf("") }
-    val onDisplayLongDetailClicked = { detailName: String, detailValue: String -> run {
-            longDetailName = detailName
-            longDetailValue = detailValue
-            displayLongDetails = true
-        }
-    }
-    val onCloseLongDetailClicked = {
-        longDetailName = ""
-        longDetailValue = ""
-        displayLongDetails = false
-    }
-
     Box(modifier =
         Modifier
             .fillMaxSize()
@@ -90,18 +77,18 @@ fun OompaLoompaDetails(
             )
             OompaLoompaFavoriteCard(
                 oompaLoompaFavorite = oompaLoompa.favorite,
-                onDisplayLongDetailClicked = onDisplayLongDetailClicked,
+                longDetailState,
             )
             OompaLoompaExtraDetailsCard(
                 oompaLoompaExtraDetails = oompaLoompaExtraDetails,
-                onDisplayLongDetailClicked = onDisplayLongDetailClicked,
+                longDetailState,
             )
         }
-        if (displayLongDetails) {
+        if (longDetailState.showLongDetail) {
             LongDetail(
-                detailName = longDetailName,
-                detailValue = longDetailValue,
-                onCloseLongDetailClicked = onCloseLongDetailClicked,
+                detailName = longDetailState.longDetailName,
+                detailValue = longDetailState.longDetailValue,
+                onCloseLongDetailClicked = longDetailState.onHideLongDetail,
             )
         }
     }

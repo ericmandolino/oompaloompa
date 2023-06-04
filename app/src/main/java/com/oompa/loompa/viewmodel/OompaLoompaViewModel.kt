@@ -34,6 +34,13 @@ class OompaLoompaViewModel @Inject constructor(
         private set
     var filterByProfessions by mutableStateOf(listOf<String>())
         private set
+    var showLongDetail by mutableStateOf(false)
+        private set
+    var longDetailName by mutableStateOf("")
+        private set
+    var longDetailValue by mutableStateOf("")
+        private set
+
 
     @OptIn(ExperimentalPagingApi::class)
     val oompaLoompas =
@@ -73,12 +80,27 @@ class OompaLoompaViewModel @Inject constructor(
         currentPagingSource.invalidate()
     }
 
-    fun getFilteringState() : OompaLoompaFilteringState {
+    fun getFilteringState(): OompaLoompaFilteringState {
         return OompaLoompaFilteringState(
-            filterByGenders,
-            { onGenderFilterChanged(it) },
-            filterByProfessions,
-            { onProfessionFilterChanged(it) },
+            selectedGenders = filterByGenders,
+            onGenderFilterChanged = { onGenderFilterChanged(it) },
+            selectedProfessions = filterByProfessions,
+            onProfessionFilterChanged = { onProfessionFilterChanged(it) },
+        )
+    }
+
+    fun getLongDetailState(): OompaLoompaLongDetailState {
+        return OompaLoompaLongDetailState(
+            showLongDetail,
+            longDetailName,
+            longDetailValue,
+            onShowLongDetail = { name: String, value: String -> run {
+                    showLongDetail = true
+                    longDetailName = name
+                    longDetailValue = value
+                }
+            },
+            onHideLongDetail = { showLongDetail = false },
         )
     }
 }

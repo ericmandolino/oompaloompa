@@ -45,6 +45,7 @@ import com.oompa.loompa.data.model.OompaLoompaApiResponse
 import com.oompa.loompa.data.model.OompaLoompaExtraDetails
 import com.oompa.loompa.data.model.OompaLoompaFavorite
 import com.oompa.loompa.ui.theme.LoompaTheme
+import com.oompa.loompa.viewmodel.OompaLoompaLongDetailState
 
 @Composable
 fun OompaLoompaCard(
@@ -157,7 +158,7 @@ fun SecondaryLine(name: String, value: String) {
 @Composable
 fun OompaLoompaFavoriteCard(
     oompaLoompaFavorite: OompaLoompaFavorite,
-    onDisplayLongDetailClicked: ( name: String, value: String) -> Unit,
+    longDetailState: OompaLoompaLongDetailState,
 ) {
     Card {
         Column(
@@ -173,12 +174,12 @@ fun OompaLoompaFavoriteCard(
             DetailBlock(
                 blockName = stringResource(R.string.song),
                 blockValue = oompaLoompaFavorite.song,
-                onDisplayLongDetailClicked,
+                longDetailState,
             )
             DetailBlock(
                 blockName = stringResource(R.string.random_string),
                 blockValue = oompaLoompaFavorite.randomString,
-                onDisplayLongDetailClicked,
+                longDetailState,
             )
         }
     }
@@ -187,7 +188,7 @@ fun OompaLoompaFavoriteCard(
 @Composable
 fun OompaLoompaExtraDetailsCard(
     oompaLoompaExtraDetails: OompaLoompaExtraDetails,
-    onDisplayLongDetailClicked: (name: String, value: String) -> Unit,
+    longDetailState: OompaLoompaLongDetailState,
 ) {
     Card {
         Column(
@@ -201,12 +202,12 @@ fun OompaLoompaExtraDetailsCard(
             DetailBlock(
                 blockName = stringResource(R.string.description),
                 blockValue = oompaLoompaExtraDetails.description,
-                onDisplayLongDetailClicked,
+                longDetailState,
             )
             DetailBlock(
                 blockName = stringResource(R.string.quota),
                 blockValue = oompaLoompaExtraDetails.quota,
-                onDisplayLongDetailClicked,
+                longDetailState,
             )
         }
     }
@@ -216,13 +217,13 @@ fun OompaLoompaExtraDetailsCard(
 fun DetailBlock(
     blockName: String,
     blockValue: String,
-    onDisplayLongDetailClicked: (name: String, value: String) -> Unit,
+    longDetailState: OompaLoompaLongDetailState,
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                onDisplayLongDetailClicked(blockName, blockValue)
+                longDetailState.onShowLongDetail(blockName, blockValue)
             }
     ) {
         Row {
@@ -300,7 +301,13 @@ fun OompaLoompaFavoriteCardPreview() {
     LoompaTheme {
         OompaLoompaFavoriteCard(
             oompaLoompaFavorite = oompaLoompaFavorite,
-            onDisplayLongDetailClicked = { _: String,  _: String -> run {} },
+            longDetailState = OompaLoompaLongDetailState(
+                showLongDetail = false,
+                longDetailName = "",
+                longDetailValue = "",
+                onShowLongDetail = { _: String,  _: String -> run {} },
+                onHideLongDetail = {},
+            ),
         )
     }
 }
@@ -335,7 +342,13 @@ fun OompaLoompaExtraDetailsCardPreview() {
     LoompaTheme {
         OompaLoompaExtraDetailsCard(
             oompaLoompaExtraDetails = oompaLoompaExtraDetails,
-            onDisplayLongDetailClicked = { _: String,  _: String -> run {} },
+            longDetailState = OompaLoompaLongDetailState(
+                showLongDetail = false,
+                longDetailName = "",
+                longDetailValue = "",
+                onShowLongDetail = { _: String,  _: String -> run {} },
+                onHideLongDetail = {},
+            ),
         )
     }
 }
