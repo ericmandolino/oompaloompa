@@ -45,21 +45,21 @@ import com.oompa.loompa.R
 import com.oompa.loompa.data.service.API_GENDER_FEMALE
 import com.oompa.loompa.data.service.API_GENDER_MALE
 import com.oompa.loompa.ui.theme.LoompaTheme
+import com.oompa.loompa.viewmodel.MainScreenViewModel
 import com.oompa.loompa.viewmodel.OompaLoompaFilteringState
-import com.oompa.loompa.viewmodel.OompaLoompaViewModel
 
 @Composable
 fun MainScreen(
-    oompaLoompaViewModel: OompaLoompaViewModel,
+    mainScreenViewModel: MainScreenViewModel,
     onNavigateToOompaLoompaDetails: (oompaLoompaId: Long) -> Unit
 ) {
-    val availableProfessions = oompaLoompaViewModel.getProfessions().collectAsState(initial = listOf())
+    val availableProfessions = mainScreenViewModel.getProfessions().collectAsState(initial = listOf())
     Scaffold(
         modifier = Modifier.padding(8.dp),
-        content = { paddingValues ->  MainScreenContent(oompaLoompaViewModel, onNavigateToOompaLoompaDetails, paddingValues) },
+        content = { paddingValues ->  MainScreenContent(mainScreenViewModel, onNavigateToOompaLoompaDetails, paddingValues) },
         floatingActionButton = {
             FilterComponent(
-                oompaLoompaViewModel.getFilteringState(),
+                mainScreenViewModel.getFilteringState(),
                 availableProfessions.value,
             )
         },
@@ -68,11 +68,11 @@ fun MainScreen(
 
 @Composable
 fun MainScreenContent(
-    oompaLoompaViewModel: OompaLoompaViewModel,
+    mainScreenViewModel: MainScreenViewModel,
     onNavigateToOompaLoompaDetails: (oompaLoompaId: Long) -> Unit,
     paddingValues: PaddingValues,
 ) {
-    PagingOompaLoompas(oompaLoompaViewModel, onNavigateToOompaLoompaDetails, paddingValues)
+    PagingOompaLoompas(mainScreenViewModel, onNavigateToOompaLoompaDetails, paddingValues)
 }
 
 @Composable

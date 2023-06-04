@@ -32,21 +32,21 @@ import com.oompa.loompa.R
 import com.oompa.loompa.data.model.OompaLoompa
 import com.oompa.loompa.data.model.OompaLoompaExtraDetails
 import com.oompa.loompa.ui.theme.LoompaTheme
+import com.oompa.loompa.viewmodel.DetailsScreenViewModel
 import com.oompa.loompa.viewmodel.OompaLoompaLongDetailState
-import com.oompa.loompa.viewmodel.OompaLoompaViewModel
 
 @Composable
 fun OompaLoompaDetailsScreen(
-    oompaLoompaViewModel: OompaLoompaViewModel,
+    detailsScreenViewModel: DetailsScreenViewModel,
     oompaLoompaId: Long?,
 ) {
-    val oompaLoompaDetails = if (oompaLoompaId != null) oompaLoompaViewModel.getOompaLoompaWithExtraDetails(oompaLoompaId).collectAsState(null).value else null
+    val oompaLoompaDetails = if (oompaLoompaId != null) detailsScreenViewModel.getOompaLoompaWithExtraDetails(oompaLoompaId).collectAsState(null).value else null
     if (oompaLoompaDetails?.size == 1) {
         val entry = oompaLoompaDetails.iterator().next()
         OompaLoompaDetails(
             oompaLoompa = entry.key,
             oompaLoompaExtraDetails = entry.value,
-            longDetailState = oompaLoompaViewModel.getLongDetailState(),
+            longDetailState = detailsScreenViewModel.getLongDetailState(),
         )
     } else {
         OompaLoompaNoDetails()

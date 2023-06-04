@@ -14,11 +14,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.oompa.loompa.R
-import com.oompa.loompa.viewmodel.OompaLoompaViewModel
+import com.oompa.loompa.viewmodel.MainScreenViewModel
 
 @Composable
 fun PagingOompaLoompas(
-    oompaLoompaViewModel: OompaLoompaViewModel,
+    oompaLoompaViewModel: MainScreenViewModel,
     onNavigateToOompaLoompaDetails: (oompaLoompaId: Long) -> Unit,
     paddingValues: PaddingValues,
 ) {

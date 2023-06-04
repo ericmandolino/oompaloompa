@@ -8,13 +8,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.oompa.loompa.viewmodel.OompaLoompaViewModel
+import com.oompa.loompa.viewmodel.DetailsScreenViewModel
+import com.oompa.loompa.viewmodel.MainScreenViewModel
 
 @Composable
 fun Navigation(
     navController: NavHostController = rememberNavController(),
     startDestination: String = "main",
-    oompaLoompaViewModel: OompaLoompaViewModel = hiltViewModel(),
+    mainScreenViewModel: MainScreenViewModel = hiltViewModel(),
+    detailsScreenViewModel: DetailsScreenViewModel = hiltViewModel(),
 ) {
     NavHost(
         navController = navController,
@@ -24,7 +26,7 @@ fun Navigation(
             route = "main"
         ) {
             MainScreen(
-                oompaLoompaViewModel = oompaLoompaViewModel,
+                mainScreenViewModel = mainScreenViewModel,
                 onNavigateToOompaLoompaDetails = {
                     navController.navigate("oompaLoompaDetails/$it")
                 }
@@ -35,7 +37,7 @@ fun Navigation(
             arguments = listOf(navArgument("oompaLoompaId") { type = NavType.LongType }),
         ) { navBackStackEntry ->
             OompaLoompaDetailsScreen(
-                oompaLoompaViewModel = oompaLoompaViewModel,
+                detailsScreenViewModel = detailsScreenViewModel,
                 oompaLoompaId = navBackStackEntry.arguments?.getLong("oompaLoompaId"),
             )
         }

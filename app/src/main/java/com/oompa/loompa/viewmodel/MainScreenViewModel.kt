@@ -12,8 +12,6 @@ import androidx.paging.PagingSource
 import androidx.paging.cachedIn
 import com.oompa.loompa.data.database.OompaLoompaDatabase
 import com.oompa.loompa.data.model.OompaLoompa
-import com.oompa.loompa.data.model.OompaLoompaExtraDetails
-import com.oompa.loompa.data.OompaLoompaRepository
 import com.oompa.loompa.data.OompaLoompasRemoteMediator
 import com.oompa.loompa.data.service.OompaLoompaApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,10 +21,9 @@ import javax.inject.Inject
 const val PAGE_SIZE = 20
 
 @HiltViewModel
-class OompaLoompaViewModel @Inject constructor(
+class MainScreenViewModel @Inject constructor(
     oompaLoompaApiService: OompaLoompaApiService,
     oompaLoompaDatabase: OompaLoompaDatabase,
-    private val oompaLoompaRepository: OompaLoompaRepository,
 ): ViewModel() {
     private val oompaLoompasDao = oompaLoompaDatabase.getOompaLoompasDao()
     private lateinit var currentPagingSource: PagingSource<Int, OompaLoompa>
@@ -34,13 +31,6 @@ class OompaLoompaViewModel @Inject constructor(
         private set
     var filterByProfessions by mutableStateOf(listOf<String>())
         private set
-    var showLongDetail by mutableStateOf(false)
-        private set
-    var longDetailName by mutableStateOf("")
-        private set
-    var longDetailValue by mutableStateOf("")
-        private set
-
 
     @OptIn(ExperimentalPagingApi::class)
     val oompaLoompas =
@@ -63,13 +53,6 @@ class OompaLoompaViewModel @Inject constructor(
         return oompaLoompasDao.getProfessions()
     }
 
-    fun getOompaLoompaWithExtraDetails(oompaLoompaId: Long): Flow<Map<OompaLoompa, OompaLoompaExtraDetails>> {
-        return oompaLoompaRepository.getOompaLoompaExtraDetails(
-            coroutineScope = viewModelScope,
-            oompaLoompaId = oompaLoompaId,
-        )
-    }
-
     private fun onGenderFilterChanged(genders: List<String>) {
         filterByGenders = genders
         currentPagingSource.invalidate()
@@ -86,21 +69,6 @@ class OompaLoompaViewModel @Inject constructor(
             onGenderFilterChanged = { onGenderFilterChanged(it) },
             selectedProfessions = filterByProfessions,
             onProfessionFilterChanged = { onProfessionFilterChanged(it) },
-        )
-    }
-
-    fun getLongDetailState(): OompaLoompaLongDetailState {
-        return OompaLoompaLongDetailState(
-            showLongDetail,
-            longDetailName,
-            longDetailValue,
-            onShowLongDetail = { name: String, value: String -> run {
-                    showLongDetail = true
-                    longDetailName = name
-                    longDetailValue = value
-                }
-            },
-            onHideLongDetail = { showLongDetail = false },
         )
     }
 }
