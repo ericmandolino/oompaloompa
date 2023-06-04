@@ -40,12 +40,12 @@ fun OompaLoompaDetailsScreen(
     detailsScreenViewModel: DetailsScreenViewModel,
     oompaLoompaId: Long?,
 ) {
-    val oompaLoompaDetails = if (oompaLoompaId != null) detailsScreenViewModel.getOompaLoompaWithExtraDetails(oompaLoompaId).collectAsState(null).value else null
-    if (oompaLoompaDetails?.size == 1) {
-        val entry = oompaLoompaDetails.iterator().next()
+    val oompaLoompa = if (oompaLoompaId != null) detailsScreenViewModel.getOompaLoompa(oompaLoompaId).collectAsState(null).value else null
+    val oompaLoompaExtraDetails = if (oompaLoompaId != null) detailsScreenViewModel.getOompaLoompaExtraDetails(oompaLoompaId).collectAsState(null).value else null
+    if (oompaLoompa != null || oompaLoompaExtraDetails != null) {
         OompaLoompaDetails(
-            oompaLoompa = entry.key,
-            oompaLoompaExtraDetails = entry.value,
+            oompaLoompa,
+            oompaLoompaExtraDetails,
             longDetailState = detailsScreenViewModel.getLongDetailState(),
         )
     } else {
@@ -55,8 +55,8 @@ fun OompaLoompaDetailsScreen(
 
 @Composable
 fun OompaLoompaDetails(
-    oompaLoompa: OompaLoompa,
-    oompaLoompaExtraDetails: OompaLoompaExtraDetails,
+    oompaLoompa: OompaLoompa?,
+    oompaLoompaExtraDetails: OompaLoompaExtraDetails?,
     longDetailState: OompaLoompaLongDetailState,
 ) {
     Box(modifier =
@@ -70,19 +70,27 @@ fun OompaLoompaDetails(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            OompaLoompaCard(
-                oompaLoompa = oompaLoompa,
-                startExpanded = true,
-                clickable = false,
-            )
-            OompaLoompaFavoriteCard(
-                oompaLoompaFavorite = oompaLoompa.favorite,
-                longDetailState,
-            )
-            OompaLoompaExtraDetailsCard(
-                oompaLoompaExtraDetails = oompaLoompaExtraDetails,
-                longDetailState,
-            )
+            if (oompaLoompa != null) {
+                OompaLoompaCard(
+                    oompaLoompa = oompaLoompa,
+                    startExpanded = true,
+                    clickable = false,
+                )
+                OompaLoompaFavoriteCard(
+                    oompaLoompaFavorite = oompaLoompa.favorite,
+                    longDetailState,
+                )
+            } else {
+                // TODO: loading state (?)
+            }
+            if (oompaLoompaExtraDetails != null) {
+                OompaLoompaExtraDetailsCard(
+                    oompaLoompaExtraDetails = oompaLoompaExtraDetails,
+                    longDetailState,
+                )
+            } else {
+                // TODO: loading state (?)
+            }
         }
         if (longDetailState.showLongDetail) {
             LongDetail(

@@ -23,7 +23,13 @@ class DetailsScreenViewModel @Inject constructor(
     var longDetailValue by mutableStateOf("")
         private set
 
-    fun getOompaLoompaWithExtraDetails(oompaLoompaId: Long): Flow<Map<OompaLoompa, OompaLoompaExtraDetails>> {
+    fun getOompaLoompa(oompaLoompaId: Long): Flow<OompaLoompa> {
+        return oompaLoompaRepository.getOompaLoompa(
+            oompaLoompaId = oompaLoompaId,
+        )
+    }
+
+    fun getOompaLoompaExtraDetails(oompaLoompaId: Long): Flow<OompaLoompaExtraDetails> {
         return oompaLoompaRepository.getOompaLoompaExtraDetails(
             coroutineScope = viewModelScope,
             oompaLoompaId = oompaLoompaId,

@@ -50,7 +50,7 @@ class MainScreenViewModel @Inject constructor(
         ).flow.cachedIn(viewModelScope)
 
     fun getProfessions(): Flow<List<String>> {
-        return oompaLoompasDao.getProfessions()
+        return oompaLoompasDao.observeProfessions()
     }
 
     private fun onGenderFilterChanged(genders: List<String>) {

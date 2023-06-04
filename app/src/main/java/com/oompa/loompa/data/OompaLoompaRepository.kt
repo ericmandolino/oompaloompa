@@ -21,12 +21,18 @@ class OompaLoompaRepository @Inject constructor(
 ) {
     private val oompaLoompasDao = oompaLoompaDatabase.getOompaLoompasDao()
 
+    fun getOompaLoompa(
+        oompaLoompaId: Long,
+    ): Flow<OompaLoompa> {
+        return oompaLoompasDao.observeOompaLoompa(oompaLoompaId)
+    }
+
     fun getOompaLoompaExtraDetails(
         coroutineScope: CoroutineScope,
         oompaLoompaId: Long,
-    ): Flow<Map<OompaLoompa, OompaLoompaExtraDetails>> {
+    ): Flow<OompaLoompaExtraDetails> {
         checkCache(coroutineScope, oompaLoompaId)
-        return oompaLoompasDao.observeOompaLoompaWithExtraDetails(oompaLoompaId)
+        return oompaLoompasDao.observeOompaLoompaExtraDetails(oompaLoompaId)
     }
 
     private fun checkCache(
