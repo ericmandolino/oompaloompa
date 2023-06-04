@@ -30,17 +30,27 @@ class OompaLoompaRepository @Inject constructor(
     fun getOompaLoompaExtraDetails(
         coroutineScope: CoroutineScope,
         oompaLoompaId: Long,
+        onApiFailure: () -> Unit,
     ): Flow<OompaLoompaExtraDetails> {
-        checkCache(coroutineScope, oompaLoompaId)
+        checkCache(
+            coroutineScope,
+            oompaLoompaId,
+            onApiFailure,
+        )
         return oompaLoompasDao.observeOompaLoompaExtraDetails(oompaLoompaId)
     }
 
     private fun checkCache(
         coroutineScope: CoroutineScope,
         oompaLoompaId: Long,
+        onApiFailure: () -> Unit,
     ) = coroutineScope.launch {
         if (!isInCacheAndHasNotExpired(oompaLoompaId)) {
-            fetchOompaLoompaExtraDetails(coroutineScope, oompaLoompaId)
+            fetchOompaLoompaExtraDetails(
+                coroutineScope,
+                oompaLoompaId,
+                onApiFailure,
+            )
         }
     }
 
@@ -52,21 +62,22 @@ class OompaLoompaRepository @Inject constructor(
         updateInCache(oompaLoompaId, oompaLoompaApiResponse)
     }
 
-    private fun fetchOompaLoompaExtraDetails(
+    fun fetchOompaLoompaExtraDetails(
         coroutineScope: CoroutineScope,
         oompaLoompaId: Long,
+        onApiFailure: () -> Unit,
     ) {
         val call = oompaLoompaApiService.getOompaLoompa(oompaLoompaId)
         call.enqueue(object:  Callback<OompaLoompaApiResponse> {
             override fun onFailure(call: Call<OompaLoompaApiResponse>, t: Throwable) {
-                // TODO
+                onApiFailure()
             }
 
             override fun onResponse(call: Call<OompaLoompaApiResponse>, response: Response<OompaLoompaApiResponse>) {
                 val oompaLoompaExtraDetails = response.body()
                 if (oompaLoompaExtraDetails != null) {
                     updateCache(coroutineScope, oompaLoompaId, oompaLoompaExtraDetails)
-                } // TODO else (?)
+                }
             }
         })
     }

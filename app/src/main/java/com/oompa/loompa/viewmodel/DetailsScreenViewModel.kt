@@ -22,6 +22,7 @@ class DetailsScreenViewModel @Inject constructor(
         private set
     var longDetailValue by mutableStateOf("")
         private set
+    var showRefreshExtraDetails by mutableStateOf(false)
 
     fun getOompaLoompa(oompaLoompaId: Long): Flow<OompaLoompa> {
         return oompaLoompaRepository.getOompaLoompa(
@@ -33,6 +34,30 @@ class DetailsScreenViewModel @Inject constructor(
         return oompaLoompaRepository.getOompaLoompaExtraDetails(
             coroutineScope = viewModelScope,
             oompaLoompaId = oompaLoompaId,
+            onApiFailure = {
+                showRefreshExtraDetails = true
+            },
+        )
+    }
+
+    fun getRefreshExtraDetailsState(oompaLoompaId: Long?): OompaLoompaRefreshExtraDetailsState {
+        return OompaLoompaRefreshExtraDetailsState(
+            showRefreshExtraDetails,
+            onRefreshExtraDetails =
+            if (oompaLoompaId != null) {
+                {
+                    showRefreshExtraDetails = false
+                    oompaLoompaRepository.fetchOompaLoompaExtraDetails(
+                        coroutineScope = viewModelScope,
+                        oompaLoompaId = oompaLoompaId,
+                        onApiFailure = {
+                            showRefreshExtraDetails = true
+                        },
+                    )
+                }
+            } else {
+                {}
+            }
         )
     }
 
