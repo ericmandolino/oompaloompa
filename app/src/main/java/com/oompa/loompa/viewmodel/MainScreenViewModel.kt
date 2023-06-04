@@ -27,10 +27,8 @@ class MainScreenViewModel @Inject constructor(
 ): ViewModel() {
     private val oompaLoompasDao = oompaLoompaDatabase.getOompaLoompasDao()
     private lateinit var currentPagingSource: PagingSource<Int, OompaLoompa>
-    var filterByGenders by mutableStateOf(listOf<String>())
-        private set
-    var filterByProfessions by mutableStateOf(listOf<String>())
-        private set
+    private var filterByGenders by mutableStateOf(listOf<String>())
+    private var filterByProfessions by mutableStateOf(listOf<String>())
 
     @OptIn(ExperimentalPagingApi::class)
     val oompaLoompas =

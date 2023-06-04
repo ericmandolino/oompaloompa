@@ -16,13 +16,10 @@ import javax.inject.Inject
 class DetailsScreenViewModel @Inject constructor(
     private val oompaLoompaRepository: OompaLoompaRepository,
 ): ViewModel() {
-    var showLongDetail by mutableStateOf(false)
-        private set
-    var longDetailName by mutableStateOf("")
-        private set
-    var longDetailValue by mutableStateOf("")
-        private set
-    var showRefreshExtraDetails by mutableStateOf(false)
+    private var showLongDetail by mutableStateOf(false)
+    private var longDetailName by mutableStateOf("")
+    private var longDetailValue by mutableStateOf("")
+    private var showRefreshExtraDetails by mutableStateOf(false)
 
     fun getOompaLoompa(oompaLoompaId: Long): Flow<OompaLoompa> {
         return oompaLoompaRepository.getOompaLoompa(
