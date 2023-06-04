@@ -27,4 +27,5 @@
     <string name="filter">filter</string>
     <string name="show">show</string>
     <string name="close">close</string>
+    <string name="profile_picture">profile picture</string>
 </resources>

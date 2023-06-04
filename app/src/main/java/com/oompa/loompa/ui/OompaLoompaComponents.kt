@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.ExpandLess
@@ -26,12 +27,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.google.gson.Gson
 import com.oompa.loompa.R
 import com.oompa.loompa.data.model.OompaLoompa
@@ -71,7 +77,7 @@ fun OompaLoompaCard(
             ) {
                 OompaLoompaCardMain(oompaLoompa = oompaLoompa)
                 if (expanded) {
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
                     OompaLoompaCardSecondary(oompaLoompa = oompaLoompa)
                 }
             }
@@ -90,30 +96,46 @@ fun OompaLoompaCard(
 
 @Composable
 fun OompaLoompaCardMain(oompaLoompa: OompaLoompa) {
-    Text(
-        text = "${oompaLoompa.firstName} ${oompaLoompa.lastName}",
-        style = MaterialTheme.typography.titleLarge,
-    )
-    Text(
-        text = "${oompaLoompa.profession} (${oompaLoompa.gender})",
-        style = MaterialTheme.typography.titleMedium,
-    )
-    Text(
-        text = "ID ${oompaLoompa.id}",
-        style = MaterialTheme.typography.titleSmall,
-    )
+    Row (
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        AsyncImage(
+            model = oompaLoompa.image,
+            modifier = Modifier
+                .size(64.dp)
+                .clip(CircleShape),
+            contentDescription = stringResource(R.string.profile_picture),
+            contentScale = ContentScale.Crop,
+            placeholder = painterResource(R.drawable.ic_launcher_foreground),
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        Column(
+            modifier = Modifier
+                .weight(1f)
+        ) {
+            Text(
+                text = "${oompaLoompa.firstName} ${oompaLoompa.lastName}",
+                style = MaterialTheme.typography.titleLarge,
+            )
+            Text(
+                text = "${oompaLoompa.profession} (${oompaLoompa.gender})",
+                style = MaterialTheme.typography.titleMedium,
+            )
+            Text(
+                text = "ID ${oompaLoompa.id}",
+                style = MaterialTheme.typography.titleSmall,
+            )
+        }
+    }
 }
 
 @Composable
 fun OompaLoompaCardSecondary(oompaLoompa: OompaLoompa) {
-    Row {
-        Spacer(modifier = Modifier.width(8.dp))
-        Column {
-            SecondaryLine(name = stringResource(R.string.email), value = oompaLoompa.email)
-            SecondaryLine(name = stringResource(R.string.age), value = oompaLoompa.age.toString())
-            SecondaryLine(name = stringResource(R.string.height), value = oompaLoompa.height.toString())
-            SecondaryLine(name = stringResource(R.string.country), value = oompaLoompa.country)
-        }
+    Column {
+        SecondaryLine(name = stringResource(R.string.email), value = oompaLoompa.email)
+        SecondaryLine(name = stringResource(R.string.age), value = oompaLoompa.age.toString())
+        SecondaryLine(name = stringResource(R.string.height), value = oompaLoompa.height.toString())
+        SecondaryLine(name = stringResource(R.string.country), value = oompaLoompa.country)
     }
 }
 
