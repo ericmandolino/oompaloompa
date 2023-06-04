@@ -74,9 +74,9 @@ class OompaLoompaRepository @Inject constructor(
             }
 
             override fun onResponse(call: Call<OompaLoompaApiResponse>, response: Response<OompaLoompaApiResponse>) {
-                val oompaLoompaExtraDetails = response.body()
-                if (oompaLoompaExtraDetails != null) {
-                    updateCache(coroutineScope, oompaLoompaId, oompaLoompaExtraDetails)
+                val oompaLoompaApiResponse = response.body()
+                if (oompaLoompaApiResponse != null) {
+                    updateCache(coroutineScope, oompaLoompaId, oompaLoompaApiResponse)
                 }
             }
         })
