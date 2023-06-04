@@ -40,7 +40,9 @@ class MainScreenViewModel @Inject constructor(
             ),
             pagingSourceFactory = {
                 currentPagingSource = oompaLoompasDao.getOompaLoompas(
-                    oompaLoompasDao.createOompaLoompasQuery(filterByGenders, filterByProfessions))
+                    genders = filterByGenders,
+                    professions = filterByProfessions,
+                )
                 currentPagingSource
             },
             remoteMediator = OompaLoompasRemoteMediator(

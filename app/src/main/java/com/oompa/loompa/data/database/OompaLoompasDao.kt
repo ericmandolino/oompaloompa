@@ -38,7 +38,11 @@ interface OompaLoompasDao {
     @RawQuery(observedEntities = [OompaLoompa::class])
     fun getOompaLoompas(query: SupportSQLiteQuery): PagingSource<Int, OompaLoompa>
 
-    fun createOompaLoompasQuery(genders: List<String>, professions: List<String>): SupportSQLiteQuery {
+    fun getOompaLoompas(genders: List<String>, professions: List<String>): PagingSource<Int, OompaLoompa> {
+        return getOompaLoompas(createOompaLoompasQuery(genders, professions))
+    }
+
+    private fun createOompaLoompasQuery(genders: List<String>, professions: List<String>): SupportSQLiteQuery {
         val whereBuilder = StringBuilder()
 
         if (genders.isNotEmpty()) {
