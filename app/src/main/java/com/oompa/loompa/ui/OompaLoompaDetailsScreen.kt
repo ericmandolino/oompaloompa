@@ -270,18 +270,20 @@ fun LongDetail(
             .fillMaxSize(),
         color = Color.Transparent,
     ) {
-        Surface(
-            color = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.5f),
+        Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(24.dp),
         ) {
             Card(
                 modifier = Modifier
                     .fillMaxSize(),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                )
+                ),
+                elevation = CardDefaults.elevatedCardElevation(
+                      defaultElevation = 8.dp,
+                ),
             ) {
                 Column(
                     modifier = Modifier

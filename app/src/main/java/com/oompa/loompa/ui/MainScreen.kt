@@ -114,9 +114,12 @@ fun FilterContent(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.secondaryContainer
         ),
+        elevation = CardDefaults.elevatedCardElevation(
+            defaultElevation = 8.dp,
+        ),
     ) {
         Column(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             FilterSection(filterName = stringResource(R.string.gender)) {
