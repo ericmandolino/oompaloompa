@@ -1,7 +1,8 @@
-package com.oompa.loompa.data.database
+package com.oompa.loompa.data
 
 import com.oompa.loompa.TestUtil
-import com.oompa.loompa.data.OompaLoompaRepository
+import com.oompa.loompa.data.database.OompaLoompaDatabase
+import com.oompa.loompa.data.database.OompaLoompasDao
 import com.oompa.loompa.data.model.OompaLoompaApiResponse
 import com.oompa.loompa.data.model.OompaLoompaExtraDetails
 import com.oompa.loompa.data.service.OompaLoompaApiService
