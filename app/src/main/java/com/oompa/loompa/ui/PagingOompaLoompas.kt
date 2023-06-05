@@ -70,14 +70,14 @@ fun OompaLoompaPagingList(
         ) { index ->
             val oompaLoompa = oompaLoompas[index]
             if (oompaLoompa != null) {
-                OompaLoompaCard(
+                OompaLoompaCardItem(
                     oompaLoompa = oompaLoompa,
                     clickable = true,
                     onClick = onNavigateToOompaLoompaDetails,
                     clickLabel = stringResource(R.string.go_to_details),
                 )
             } else {
-                OompaLoompaPlaceholder()
+                OompaLoompaCardItemPlaceholder()
             }
         }
         item {
@@ -136,7 +136,7 @@ fun OompaLoompaPagingAppendItem(
 }
 
 @Composable
-fun OompaLoompaPlaceholder() {
+fun OompaLoompaCardItemPlaceholder() {
     Card( modifier = Modifier
         .fillMaxWidth()
         .height(48.dp) ) { }
