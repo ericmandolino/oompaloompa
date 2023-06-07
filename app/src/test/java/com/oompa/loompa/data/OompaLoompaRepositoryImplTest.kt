@@ -28,7 +28,7 @@ import retrofit2.Callback
 import retrofit2.mock.Calls
 
 @RunWith(MockitoJUnitRunner::class)
-class OompaLoompaRepositoryTest {
+class OompaLoompaRepositoryImplTest {
     @Mock
     lateinit var oompaLoompaDatabase: OompaLoompaDatabase
     @Mock
@@ -43,7 +43,7 @@ class OompaLoompaRepositoryTest {
         val oompaLoompa1 = TestUtil.createOompaLoompa(oompaLoompaId)
         `when`(oompaLoompaDatabase.getOompaLoompasDao()).thenReturn(oompaLoompasDao)
         `when`(oompaLoompasDao.observeOompaLoompa(oompaLoompaId)).thenReturn(flowOf(oompaLoompa1))
-        val repository = OompaLoompaRepository(
+        val repository = OompaLoompaRepositoryImpl(
             oompaLoompaApiService = oompaLoompaApiService,
             oompaLoompaDatabase = oompaLoompaDatabase,
         )
@@ -63,7 +63,7 @@ class OompaLoompaRepositoryTest {
         `when`(oompaLoompaDatabase.getOompaLoompasDao()).thenReturn(oompaLoompasDao)
         `when`(oompaLoompasDao.observeOompaLoompaExtraDetails(oompaLoompaId)).thenReturn(flowOf(oompaLoompaExtraDetails1))
         `when`(oompaLoompasDao.getOompaLoompaExtraDetails(oompaLoompaId)).thenReturn(oompaLoompaExtraDetails1)
-        val repository = OompaLoompaRepository(
+        val repository = OompaLoompaRepositoryImpl(
             oompaLoompaApiService = oompaLoompaApiService,
             oompaLoompaDatabase = oompaLoompaDatabase,
         )
@@ -87,7 +87,7 @@ class OompaLoompaRepositoryTest {
         `when`(oompaLoompaDatabase.getOompaLoompasDao()).thenReturn(oompaLoompasDao)
         `when`(oompaLoompasDao.observeOompaLoompaExtraDetails(oompaLoompaId)).thenReturn(flowOf(oompaLoompaExtraDetails1))
         `when`(oompaLoompasDao.getOompaLoompaExtraDetails(oompaLoompaId)).thenReturn(oompaLoompaExtraDetails1)
-        val repository = OompaLoompaRepository(
+        val repository = OompaLoompaRepositoryImpl(
             oompaLoompaApiService = oompaLoompaApiService,
             oompaLoompaDatabase = oompaLoompaDatabase,
         )
@@ -114,7 +114,7 @@ class OompaLoompaRepositoryTest {
         `when`(oompaLoompaDatabase.getOompaLoompasDao()).thenReturn(oompaLoompasDao)
         `when`(oompaLoompasDao.observeOompaLoompaExtraDetails(oompaLoompaId)).thenReturn(flowOf(oompaLoompaExtraDetails1))
         `when`(oompaLoompasDao.getOompaLoompaExtraDetails(oompaLoompaId)).thenReturn(oompaLoompaExtraDetails1)
-        val repository = OompaLoompaRepository(
+        val repository = OompaLoompaRepositoryImpl(
             oompaLoompaApiService = oompaLoompaApiService,
             oompaLoompaDatabase = oompaLoompaDatabase,
         )
@@ -141,7 +141,7 @@ class OompaLoompaRepositoryTest {
         )
         `when`(oompaLoompaDatabase.getOompaLoompasDao()).thenReturn(oompaLoompasDao)
         `when`(oompaLoompasDao.observeOompaLoompaExtraDetails(oompaLoompaId)).thenReturn(flowOf(oompaLoompaExtraDetails1))
-        val repository = OompaLoompaRepository(
+        val repository = OompaLoompaRepositoryImpl(
             oompaLoompaApiService = oompaLoompaApiService,
             oompaLoompaDatabase = oompaLoompaDatabase,
         )
@@ -172,7 +172,7 @@ class OompaLoompaRepositoryTest {
             extraDetails = invocationOnMock.arguments[0] as OompaLoompaExtraDetails
         }.`when`(oompaLoompasDao).insert(any())
         `when`(oompaLoompaDatabase.getOompaLoompasDao()).thenReturn(oompaLoompasDao)
-        val repository = OompaLoompaRepository(
+        val repository = OompaLoompaRepositoryImpl(
             oompaLoompaApiService = oompaLoompaApiService,
             oompaLoompaDatabase = oompaLoompaDatabase,
         )
@@ -199,7 +199,7 @@ class OompaLoompaRepositoryTest {
         `when`(oompaLoompaApiService.getOompaLoompa(oompaLoompaId)).thenReturn(callMock)
         val callbackCaptor = ArgumentCaptor.forClass(Callback::class.java) as ArgumentCaptor<Callback<OompaLoompaApiResponse>>
         doNothing().`when`(callMock).enqueue(callbackCaptor.capture())
-        val repository = OompaLoompaRepository(
+        val repository = OompaLoompaRepositoryImpl(
             oompaLoompaApiService = oompaLoompaApiService,
             oompaLoompaDatabase = oompaLoompaDatabase,
         )

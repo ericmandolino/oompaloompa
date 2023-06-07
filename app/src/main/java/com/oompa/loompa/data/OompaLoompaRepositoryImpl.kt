@@ -5,6 +5,7 @@ import com.oompa.loompa.data.model.OompaLoompa
 import com.oompa.loompa.data.model.OompaLoompaApiResponse
 import com.oompa.loompa.data.model.OompaLoompaExtraDetails
 import com.oompa.loompa.data.service.OompaLoompaApiService
+import com.oompa.loompa.viewmodel.OompaLoompaRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -12,22 +13,24 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
+import javax.inject.Singleton
 
 private const val CACHE_TIMEOUT_MILLISECONDS = 10 * 60 * 1000
 
-class OompaLoompaRepository @Inject constructor(
+@Singleton
+class OompaLoompaRepositoryImpl @Inject constructor(
     private val oompaLoompaApiService: OompaLoompaApiService,
     oompaLoompaDatabase: OompaLoompaDatabase,
-) {
+) : OompaLoompaRepository {
     private val oompaLoompasDao = oompaLoompaDatabase.getOompaLoompasDao()
 
-    fun getOompaLoompa(
+    override fun getOompaLoompa(
         oompaLoompaId: Long,
     ): Flow<OompaLoompa> {
         return oompaLoompasDao.observeOompaLoompa(oompaLoompaId)
     }
 
-    fun getOompaLoompaExtraDetails(
+    override fun getOompaLoompaExtraDetails(
         coroutineScope: CoroutineScope,
         oompaLoompaId: Long,
         onApiFailure: () -> Unit,
@@ -54,15 +57,7 @@ class OompaLoompaRepository @Inject constructor(
         }
     }
 
-    private fun updateCache(
-        coroutineScope: CoroutineScope,
-        oompaLoompaId: Long,
-        oompaLoompaApiResponse: OompaLoompaApiResponse,
-    ) = coroutineScope.launch {
-        updateInCache(oompaLoompaId, oompaLoompaApiResponse)
-    }
-
-    fun fetchOompaLoompaExtraDetails(
+    override fun fetchOompaLoompaExtraDetails(
         coroutineScope: CoroutineScope,
         oompaLoompaId: Long,
         onApiFailure: () -> Unit,
@@ -76,7 +71,9 @@ class OompaLoompaRepository @Inject constructor(
             override fun onResponse(call: Call<OompaLoompaApiResponse>, response: Response<OompaLoompaApiResponse>) {
                 val oompaLoompaApiResponse = response.body()
                 if (oompaLoompaApiResponse != null) {
-                    updateCache(coroutineScope, oompaLoompaId, oompaLoompaApiResponse)
+                    coroutineScope.launch {
+                        updateInCache(oompaLoompaId, oompaLoompaApiResponse)
+                    }
                 }
             }
         })
