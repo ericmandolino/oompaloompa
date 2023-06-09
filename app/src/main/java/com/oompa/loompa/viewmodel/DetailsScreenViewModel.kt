@@ -3,8 +3,8 @@ package com.oompa.loompa.viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.oompa.loompa.data.connectivity.ConnectivityMonitor
 import com.oompa.loompa.data.model.OompaLoompa
 import com.oompa.loompa.data.model.OompaLoompaExtraDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailsScreenViewModel @Inject constructor(
     private val oompaLoompaRepository: OompaLoompaRepository,
-): ViewModel() {
+    connectivityMonitor: ConnectivityMonitor,
+): AutomaticRetryViewModel(connectivityMonitor) {
     private var showLongDetail by mutableStateOf(false)
     private var longDetailName by mutableStateOf("")
     private var longDetailValue by mutableStateOf("")
@@ -66,8 +67,7 @@ class DetailsScreenViewModel @Inject constructor(
                 showLongDetail = true
                 longDetailName = name
                 longDetailValue = value
-            }
-            },
+            }},
             onHideLongDetail = { showLongDetail = false },
         )
     }

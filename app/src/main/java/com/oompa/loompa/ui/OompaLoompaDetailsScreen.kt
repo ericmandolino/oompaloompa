@@ -40,6 +40,7 @@ import com.oompa.loompa.data.model.OompaLoompa
 import com.oompa.loompa.data.model.OompaLoompaExtraDetails
 import com.oompa.loompa.data.model.OompaLoompaFavorite
 import com.oompa.loompa.ui.theme.LoompaTheme
+import com.oompa.loompa.viewmodel.AutomaticRetryState
 import com.oompa.loompa.viewmodel.DetailsScreenViewModel
 import com.oompa.loompa.viewmodel.OompaLoompaLongDetailState
 import com.oompa.loompa.viewmodel.OompaLoompaRefreshExtraDetailsState
@@ -56,6 +57,7 @@ fun OompaLoompaDetailsScreen(
         oompaLoompaExtraDetails,
         refreshExtraDetailsState = detailsScreenViewModel.getRefreshExtraDetailsState(oompaLoompaId),
         longDetailState = detailsScreenViewModel.getLongDetailState(),
+        automaticRetryState = detailsScreenViewModel.getAutomaticRetryState(),
     )
 }
 
@@ -65,6 +67,7 @@ fun OompaLoompaDetails(
     oompaLoompaExtraDetails: OompaLoompaExtraDetails?,
     refreshExtraDetailsState: OompaLoompaRefreshExtraDetailsState,
     longDetailState: OompaLoompaLongDetailState,
+    automaticRetryState: AutomaticRetryState,
 ) {
     Box(modifier =
         Modifier
@@ -85,6 +88,7 @@ fun OompaLoompaDetails(
                 oompaLoompaExtraDetails,
                 refreshExtraDetailsState,
                 longDetailState,
+                automaticRetryState,
             )
         }
         if (longDetailState.showLongDetail) {
@@ -123,15 +127,18 @@ fun ExtraDetails(
     oompaLoompaExtraDetails: OompaLoompaExtraDetails?,
     refreshExtraDetailsState: OompaLoompaRefreshExtraDetailsState,
     longDetailState: OompaLoompaLongDetailState,
+    automaticRetryState: AutomaticRetryState,
 ) {
     if (oompaLoompaExtraDetails != null) {
+        automaticRetryState.updateAutomaticRetry(false)
         OompaLoompaExtraDetailsCard(
             oompaLoompaExtraDetails,
             longDetailState,
         )
     } else if (refreshExtraDetailsState.showRefreshExtraDetails) {
         RetryCard(
-            onRetry = refreshExtraDetailsState.onRefreshExtraDetails
+            onRetry = refreshExtraDetailsState.onRefreshExtraDetails,
+            automaticRetryState,
         )
     } else {
         OompaLoompaNoDetailsCard()

@@ -72,7 +72,12 @@ fun MainScreenContent(
     onNavigateToOompaLoompaDetails: (oompaLoompaId: Long) -> Unit,
     paddingValues: PaddingValues,
 ) {
-    PagingOompaLoompas(mainScreenViewModel, onNavigateToOompaLoompaDetails, paddingValues)
+    PagingOompaLoompas(
+        mainScreenViewModel,
+        onNavigateToOompaLoompaDetails,
+        mainScreenViewModel.getAutomaticRetryState(),
+        paddingValues,
+    )
 }
 
 @Composable

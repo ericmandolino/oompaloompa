@@ -45,6 +45,7 @@ import coil.compose.AsyncImage
 import com.oompa.loompa.R
 import com.oompa.loompa.data.model.OompaLoompa
 import com.oompa.loompa.ui.theme.LoompaTheme
+import com.oompa.loompa.viewmodel.AutomaticRetryState
 
 
 @Composable
@@ -206,7 +207,15 @@ fun SecondaryLine(name: String, value: String) {
 @Composable
 fun RetryCard(
     onRetry: () -> Unit,
+    automaticRetryState: AutomaticRetryState,
 ) {
+    val retry = {
+        onRetry()
+        automaticRetryState.updateAutomaticRetry(false)
+    }
+    if (automaticRetryState.shouldRetryAutomatically) {
+        retry()
+    }
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -218,7 +227,7 @@ fun RetryCard(
             horizontalArrangement = Arrangement.Center,
         ) {
             Button(
-                onClick = onRetry,
+                onClick = retry,
             ) {
                 Text(
                     text = stringResource(R.string.retry)
@@ -300,6 +309,10 @@ fun OompaLoompaRefreshExtraDetailsCardPreview() {
     LoompaTheme {
         RetryCard(
             onRetry = {},
+            automaticRetryState = AutomaticRetryState(
+                shouldRetryAutomatically = false,
+                updateAutomaticRetry = {},
+            ),
         )
     }
 }

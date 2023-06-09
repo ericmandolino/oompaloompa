@@ -17,12 +17,14 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.oompa.loompa.R
 import com.oompa.loompa.data.model.OompaLoompa
+import com.oompa.loompa.viewmodel.AutomaticRetryState
 import com.oompa.loompa.viewmodel.MainScreenViewModel
 
 @Composable
 fun PagingOompaLoompas(
     oompaLoompaViewModel: MainScreenViewModel,
     onNavigateToOompaLoompaDetails: (oompaLoompaId: Long) -> Unit,
+    automaticRetryState: AutomaticRetryState,
     paddingValues: PaddingValues,
 ) {
     val oompaLoompas = oompaLoompaViewModel.oompaLoompas.collectAsLazyPagingItems()
@@ -33,17 +35,21 @@ fun PagingOompaLoompas(
             RetryCard (
                 onRetry = {
                     oompaLoompas.refresh()
-                }
+                },
+                automaticRetryState,
+
             )
         }
         is LoadState.Loading -> {
             FullScreenLoading()
         }
         else -> {
+            automaticRetryState.updateAutomaticRetry(false)
             OompaLoompaPagingList(
                 oompaLoompas,
                 onNavigateToOompaLoompaDetails,
-                paddingValues
+                automaticRetryState,
+                paddingValues,
             )
         }
     }
@@ -53,6 +59,7 @@ fun PagingOompaLoompas(
 fun OompaLoompaPagingList(
     oompaLoompas: LazyPagingItems<OompaLoompa>,
     onNavigateToOompaLoompaDetails: (oompaLoompaId: Long) -> Unit,
+    automaticRetryState: AutomaticRetryState,
     paddingValues: PaddingValues,
 ) {
     LazyColumn(
@@ -61,7 +68,8 @@ fun OompaLoompaPagingList(
     ) {
         item {
             OompaLoompaPagingPrependItem(
-                oompaLoompas
+                oompaLoompas,
+                automaticRetryState,
             )
         }
         items(
@@ -82,7 +90,8 @@ fun OompaLoompaPagingList(
         }
         item {
             OompaLoompaPagingAppendItem(
-                oompaLoompas
+                oompaLoompas,
+                automaticRetryState,
             )
         }
         item {
@@ -94,6 +103,7 @@ fun OompaLoompaPagingList(
 @Composable
 fun OompaLoompaPagingPrependItem(
     oompaLoompas: LazyPagingItems<OompaLoompa>,
+    automaticRetryState: AutomaticRetryState,
 ) {
     val pageLoadState = oompaLoompas.loadState
 
@@ -105,10 +115,12 @@ fun OompaLoompaPagingPrependItem(
             RetryCard (
                 onRetry = {
                     oompaLoompas.retry()
-                }
+                },
+                automaticRetryState,
             )
         }
         else -> {
+            automaticRetryState.updateAutomaticRetry(false)
         }
     }
 }
@@ -116,6 +128,7 @@ fun OompaLoompaPagingPrependItem(
 @Composable
 fun OompaLoompaPagingAppendItem(
     oompaLoompas: LazyPagingItems<OompaLoompa>,
+    automaticRetryState: AutomaticRetryState,
 ) {
     val pageLoadState = oompaLoompas.loadState
 
@@ -127,10 +140,12 @@ fun OompaLoompaPagingAppendItem(
             RetryCard (
                 onRetry = {
                     oompaLoompas.retry()
-                }
+                },
+                automaticRetryState
             )
         }
         else -> {
+            automaticRetryState.updateAutomaticRetry(false)
         }
     }
 }

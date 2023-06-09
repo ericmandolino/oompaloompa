@@ -3,6 +3,8 @@ package com.oompa.loompa
 import android.content.Context
 import androidx.room.Room
 import androidx.sqlite.db.SupportSQLiteQuery
+import com.oompa.loompa.data.connectivity.ConnectivityMonitor
+import com.oompa.loompa.data.connectivity.ConnectivityMonitorNetworkCallback
 import com.oompa.loompa.data.database.OompaLoompaDatabase
 import com.oompa.loompa.data.database.OompaLoompaQueryBuilder
 import com.oompa.loompa.data.database.OompaLoompaSQLiteQueryBuilder
@@ -51,4 +53,12 @@ object SingletonModule {
     @Provides
     fun provideOompaLoompaQueryBuilder() : OompaLoompaQueryBuilder<SupportSQLiteQuery> =
         OompaLoompaSQLiteQueryBuilder()
+
+    @Singleton
+    @Provides
+    fun provideConnectivityMonitorNetworkCallback() : ConnectivityMonitorNetworkCallback = ConnectivityMonitorNetworkCallback()
+
+    @Singleton
+    @Provides
+    fun provideConnectivityMonitor(connectivityMonitor: ConnectivityMonitorNetworkCallback) : ConnectivityMonitor = connectivityMonitor
 }
