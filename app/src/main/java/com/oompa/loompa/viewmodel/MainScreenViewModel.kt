@@ -10,9 +10,13 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import androidx.paging.cachedIn
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.oompa.loompa.data.database.OompaLoompaDatabase
 import com.oompa.loompa.data.model.OompaLoompa
 import com.oompa.loompa.data.OompaLoompasRemoteMediator
+import com.oompa.loompa.data.database.OompaLoompaQueryBuilder
+import com.oompa.loompa.data.database.getOompaLoompas
+import com.oompa.loompa.data.model.OompaLoompaFilter
 import com.oompa.loompa.data.service.OompaLoompaApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -24,6 +28,7 @@ private const val PAGE_SIZE = 25
 class MainScreenViewModel @Inject constructor(
     oompaLoompaApiService: OompaLoompaApiService,
     oompaLoompaDatabase: OompaLoompaDatabase,
+    oompaLoompaQueryBuilder: OompaLoompaQueryBuilder<SupportSQLiteQuery>,
 ): ViewModel() {
     private val oompaLoompasDao = oompaLoompaDatabase.getOompaLoompasDao()
     private lateinit var currentPagingSource: PagingSource<Int, OompaLoompa>
@@ -38,8 +43,11 @@ class MainScreenViewModel @Inject constructor(
             ),
             pagingSourceFactory = {
                 currentPagingSource = oompaLoompasDao.getOompaLoompas(
-                    genders = filterByGenders,
-                    professions = filterByProfessions,
+                    OompaLoompaFilter(
+                        genders = filterByGenders,
+                        professions = filterByProfessions,
+                    ),
+                    oompaLoompaQueryBuilder,
                 )
                 currentPagingSource
             },

@@ -2,7 +2,10 @@ package com.oompa.loompa
 
 import android.content.Context
 import androidx.room.Room
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.oompa.loompa.data.database.OompaLoompaDatabase
+import com.oompa.loompa.data.database.OompaLoompaQueryBuilder
+import com.oompa.loompa.data.database.OompaLoompaSQLiteQueryBuilder
 import com.oompa.loompa.data.database.OompaLoompasDao
 import com.oompa.loompa.data.database.RemoteKeysDao
 import com.oompa.loompa.data.service.OompaLoompaApiService
@@ -43,4 +46,9 @@ object SingletonModule {
     @Provides
     fun provideRemoteKeysDao(oompaLoompaDatabase: OompaLoompaDatabase): RemoteKeysDao =
         oompaLoompaDatabase.getRemoteKeysDao()
+
+    @Singleton
+    @Provides
+    fun provideOompaLoompaQueryBuilder() : OompaLoompaQueryBuilder<SupportSQLiteQuery> =
+        OompaLoompaSQLiteQueryBuilder()
 }
